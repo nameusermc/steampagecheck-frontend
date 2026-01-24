@@ -232,11 +232,12 @@
       else { output.innerHTML = "Please enter a URL or paste text."; return; }
 
       try {
-        const res = await fetch("http://localhost:5001/check", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
+        const res = await fetch("https://steampagecheck-backend.onrender.com/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
 
         const data = await res.json();
         output.innerHTML = "";
