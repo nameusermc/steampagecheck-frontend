@@ -1,34 +1,84 @@
-<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Steam Page Check</title>
+</head>
+<body>
 
-<script>
-  const PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
-  let hasPaid = localStorage.getItem('unlocked') === 'true';
+  <div class="container">
+    <div class="header">
+      <h1>Steam Page Check</h1>
+      <div class="accent"></div>
+      <p>Preflight your Steam store page against common review expectations before submission. Advisory only — not affiliated with Valve.</p>
+    </div>
 
-  function setUnlocked(state) {
-    hasPaid = state;
-    if (state) localStorage.setItem('unlocked', 'true');
-    else localStorage.removeItem('unlocked');
-    updateUnlockUI();
-  }
+    <label>Steam Store URL (public page)</label>
+    <input id="steamUrl" type="text" placeholder="https://store.steampowered.com/app/123456">
 
-  // Set environment
-  Paddle.Environment.set('sandbox');
+    <label>Or paste your store page text</label>
+    <textarea id="steamText" placeholder="Paste About This Game, Early Access notes, pricing info, etc."></textarea>
 
-  // Listen for checkout completion
-  window.addEventListener('message', function(e) {
-    if (!e.data || !e.data.event) return;
-    if (e.data.event === 'Checkout.Complete') {
-      console.log('Payment completed! Unlocking...');
-      setUnlocked(true);
+    <div class="buttons">
+      <button onclick="runCheck()">Run Check</button>
+      <button class="secondary" onclick="copyResults()">Copy Results</button>
+      <button class="ghost" onclick="loadSample()">Load Test Example</button>
+      <button class="ghost" onclick="toggleDarkMode()">Toggle Light/Dark</button>
+      <button class="secondary" id="unlockBtn">Unlock All Checks</button>
+    </div>
+
+    <div class="summary-bar" id="summaryBar"></div>
+
+    <h2>Results</h2>
+    <div id="output">No checks run yet.</div>
+
+    <h2>Check Access</h2>
+    <div id="results-container"></div>
+
+    <footer>steampagecheck.com · Not affiliated with Valve or Steam</footer>
+  </div>
+
+  <!-- Paddle Billing JS -->
+  <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+
+  <script>
+    // =====================
+    // PADDLE BILLING SETUP
+    // =====================
+    const PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
+    let hasPaid = localStorage.getItem('unlocked') === 'true';
+
+    function setUnlocked(state) {
+      hasPaid = state;
+      if (state) localStorage.setItem('unlocked', 'true');
+      else localStorage.removeItem('unlocked');
+      updateUnlockUI();
     }
-  });
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const unlockBtn = document.getElementById('unlockBtn');
-    unlockBtn.addEventListener('click', () => {
-      Paddle.Checkout.open({
-        items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
-      });
+    // Sandbox environment
+    Paddle.Environment.set('sandbox');
+
+    // Listen for checkout completion
+    window.addEventListener('message', function(e) {
+      if (!e.data || !e.data.event) return;
+      if (e.data.event === 'Checkout.Complete') {
+        console.log('Payment completed! Unlocking...');
+        setUnlocked(true);
+      }
     });
-  });
-</script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const unlockBtn = document.getElementById('unlockBtn');
+      unlockBtn.addEventListener('click', () => {
+        Paddle.Checkout.open({
+          items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
+        });
+      });
+      updateUnlockUI();
+    });
+  </script>
+
+  <script src="main.js"></script>
+</body>
+</html>
