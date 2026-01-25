@@ -1,7 +1,22 @@
 // =====================
+// UPDATE UI BASED ON UNLOCK STATE
+// =====================
+function updateUnlockUI() {
+  const unlockBtn = document.getElementById('unlockBtn');
+  if (hasPaid) {
+    unlockBtn.style.display = 'none';
+  } else {
+    unlockBtn.style.display = 'inline-block';
+  }
+
+  // Example: lock any elements/features
+  const lockedElements = document.querySelectorAll('.locked-feature');
+  lockedElements.forEach(el => el.disabled = !hasPaid);
+}
+
+// =====================
 // APP LOGIC
 // =====================
-
 function runCheck() {
   const url = document.getElementById('steamUrl').value.trim();
   const text = document.getElementById('steamText').value.trim();
@@ -35,7 +50,7 @@ function copyResults() {
 }
 
 function loadSample() {
-  document.getElementById('steamText').value = 'Sample game description with no Early Access.';
+  document.getElementById('steamText').value = `Sample game description here.`;
   runCheck();
 }
 
@@ -46,4 +61,5 @@ function toggleDarkMode() {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('steamUrl').addEventListener('input', runCheck);
   document.getElementById('steamText').addEventListener('input', runCheck);
+  updateUnlockUI();
 });
