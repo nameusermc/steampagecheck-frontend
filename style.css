@@ -5,11 +5,10 @@ body {
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #1b2838; /* body backgroun */
+  background: #1b2838;
   color: #f9fafb;
   transition: background 0.3s, color 0.3s;
 }
-
 
 body.light {
   background: #e6e7eb;
@@ -22,7 +21,7 @@ body.light {
 .container {
   max-width: 920px;
   margin: 40px auto;
-  background: #0d1b2a; /* darker Steam-inspired dark panel */
+  background: #0d1b2a;
   padding: 36px;
   border-radius: 12px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.15);
@@ -118,7 +117,7 @@ button {
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  background: #66c0f4; /* Steam blue */
+  background: #66c0f4;
   color: #111827;
   transition: background 0.2s, transform 0.2s, opacity 0.2s;
 }
@@ -212,8 +211,10 @@ body.light footer { color: #6b7280; }
   margin-bottom: 12px;
   background: #0d1b2a;
   color: #c7d5e0;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.3s, color 0.3s, opacity 0.3s;
 }
+
+body.light .check-card { background: #f9fafb; color: #111827; }
 
 .check-card.locked { opacity: 0.5; }
 .check-badge {
