@@ -26,15 +26,12 @@
       <button class="secondary" onclick="copyResults()">Copy Results</button>
       <button class="ghost" onclick="loadSample()">Load Test Example</button>
       <button class="ghost" onclick="toggleDarkMode()">Toggle Light/Dark</button>
-      <button class="secondary" onclick="buyFullAccess()">Unlock All Checks</button>
-      <button class="secondary" onclick="shareReport()">Share Report (coming soon)</button>
+      <button class="secondary" id="unlockButton" onclick="buyFullAccess()">Unlock All Checks</button>
     </div>
 
     <div class="summary-bar" id="summaryBar"></div>
 
     <h2>Results</h2>
-    <div id="output">No checks run yet.</div>
-
     <div id="results-container"></div>
 
     <footer>steampagecheck.com · Not affiliated with Valve or Steam</footer>
