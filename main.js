@@ -2,22 +2,15 @@
 // STEAM PAGE CHECK - MAIN LOGIC
 // =======================
 
-'use strict';
-
-// =========================================
-// CHECK DEFINITIONS
-// Free checks (premium: false) run for all users
-// Premium checks (premium: true) require unlock
-// =========================================
-
-const CHECKS = [
+// Check definitions - free and premium
+var CHECKS = [
   {
     id: 'early_access',
     name: 'Early Access Disclaimer',
     premium: false,
-    check: (text) => {
-      const lower = text.toLowerCase();
-      if (lower.includes('early access')) {
+    check: function(text) {
+      var lower = text.toLowerCase();
+      if (lower.indexOf('early access') !== -1) {
         return {
           severity: 'warning',
           message: 'Early Access disclaimer detected. Ensure you have completed the Early Access questionnaire.'
@@ -30,10 +23,10 @@ const CHECKS = [
     id: 'pricing',
     name: 'Pricing Information',
     premium: false,
-    check: (text) => {
-      const lower = text.toLowerCase();
-      const hasFreeToPlay = lower.includes('free to play') || lower.includes('free-to-play');
-      const hasPriceTag = /[\$€£][\d,.]+/.test(text);
+    check: function(text) {
+      var lower = text.toLowerCase();
+      var hasFreeToPlay = lower.indexOf('free to play') !== -1 || lower.indexOf('free-to-play') !== -1;
+      var hasPriceTag = /\$[\d,.]+|€[\d,.]+|£[\d,.]+/.test(text);
       
       if (hasFreeToPlay || hasPriceTag) {
         return { severity: 'pass', message: 'Pricing information detected.' };
@@ -48,34 +41,34 @@ const CHECKS = [
     id: 'description_length',
     name: 'Description Length',
     premium: false,
-    check: (text) => {
-      const words = text.trim().split(/\s+/).filter(w => w.length > 0);
-      const wordCount = words.length;
+    check: function(text) {
+      var words = text.trim().split(/\s+/);
+      var wordCount = words.length;
       
       if (wordCount < 100) {
         return {
           severity: 'fail',
-          message: `Description too short (${wordCount} words). Aim for at least 150-300 words.`
+          message: 'Description too short (' + wordCount + ' words). Aim for at least 150-300 words.'
         };
       }
       if (wordCount < 150) {
         return {
           severity: 'warning',
-          message: `Description is brief (${wordCount} words). Consider adding more detail.`
+          message: 'Description is brief (' + wordCount + ' words). Consider adding more detail.'
         };
       }
-      return { severity: 'pass', message: `Good description length (${wordCount} words).` };
+      return { severity: 'pass', message: 'Good description length (' + wordCount + ' words).' };
     }
   },
   {
     id: 'system_requirements',
     name: 'System Requirements',
     premium: true,
-    check: (text) => {
-      const lower = text.toLowerCase();
-      const hasMinimum = lower.includes('minimum') || lower.includes('min requirements');
-      const hasRecommended = lower.includes('recommended');
-      const hasOS = /windows|macos|linux|steamos/i.test(text);
+    check: function(text) {
+      var lower = text.toLowerCase();
+      var hasMinimum = lower.indexOf('minimum') !== -1;
+      var hasRecommended = lower.indexOf('recommended') !== -1;
+      var hasOS = /windows|macos|linux/i.test(text);
       
       if (hasMinimum && hasRecommended && hasOS) {
         return {
@@ -99,13 +92,13 @@ const CHECKS = [
     id: 'mature_content',
     name: 'Mature Content Disclosure',
     premium: true,
-    check: (text) => {
-      const lower = text.toLowerCase();
-      const matureKeywords = ['violence', 'blood', 'gore', 'nudity', 'sexual', 'drug', 'alcohol', 'mature'];
-      const disclosureKeywords = ['content warning', 'mature content', 'contains', 'includes', 'features'];
+    check: function(text) {
+      var lower = text.toLowerCase();
+      var matureKeywords = ['violence', 'blood', 'gore', 'nudity', 'sexual', 'drug', 'alcohol', 'mature'];
+      var disclosureKeywords = ['content warning', 'mature content', 'contains', 'includes'];
       
-      const hasMatureContent = matureKeywords.some(kw => lower.includes(kw));
-      const hasDisclosure = disclosureKeywords.some(kw => lower.includes(kw));
+      var hasMatureContent = matureKeywords.some(function(kw) { return lower.indexOf(kw) !== -1; });
+      var hasDisclosure = disclosureKeywords.some(function(kw) { return lower.indexOf(kw) !== -1; });
       
       if (hasMatureContent && !hasDisclosure) {
         return {
@@ -123,10 +116,9 @@ const CHECKS = [
     id: 'multiplayer_info',
     name: 'Multiplayer Details',
     premium: true,
-    check: (text) => {
-      const lower = text.toLowerCase();
-      const hasMultiplayer = /multiplayer|co-op|coop|online|pvp|pve/i.test(text);
-      const hasPlayerCount = /\d+\s*(-|to)\s*\d+\s*players?|\d+\s*players?/i.test(text);
+    check: function(text) {
+      var hasMultiplayer = /multiplayer|co-op|coop|online/i.test(text);
+      var hasPlayerCount = /\d+\s*(-|to)\s*\d+\s*players?|\d+\s*players?/i.test(text);
       
       if (hasMultiplayer && !hasPlayerCount) {
         return {
@@ -144,19 +136,18 @@ const CHECKS = [
     id: 'language_support',
     name: 'Language Support',
     premium: true,
-    check: (text) => {
-      const lower = text.toLowerCase();
-      const hasLanguageSection = lower.includes('language') || lower.includes('subtitles') || lower.includes('localization');
-      const languages = ['english', 'spanish', 'french', 'german', 'chinese', 'japanese', 'korean', 'portuguese', 'russian', 'italian', 'polish'];
-      const detectedLangs = languages.filter(lang => lower.includes(lang));
+    check: function(text) {
+      var lower = text.toLowerCase();
+      var languages = ['english', 'spanish', 'french', 'german', 'chinese', 'japanese', 'korean', 'portuguese', 'russian'];
+      var detectedCount = languages.filter(function(lang) { return lower.indexOf(lang) !== -1; }).length;
       
-      if (detectedLangs.length >= 3) {
+      if (detectedCount >= 3) {
         return {
           severity: 'pass',
-          message: `Multiple languages detected (${detectedLangs.length}). Good localization coverage.`
+          message: 'Multiple languages detected (' + detectedCount + '). Good localization coverage.'
         };
       }
-      if (hasLanguageSection || detectedLangs.length > 0) {
+      if (detectedCount > 0) {
         return {
           severity: 'warning',
           message: 'Limited language information. Consider listing all supported languages.'
@@ -172,9 +163,9 @@ const CHECKS = [
     id: 'legal_disclaimers',
     name: 'Legal & Copyright',
     premium: true,
-    check: (text) => {
-      const hasCopyright = /©|copyright|\(c\)|all rights reserved/i.test(text);
-      const hasTrademark = /™|®|trademark/i.test(text);
+    check: function(text) {
+      var hasCopyright = /©|copyright|all rights reserved/i.test(text);
+      var hasTrademark = /™|®|trademark/i.test(text);
       
       if (hasCopyright || hasTrademark) {
         return { severity: 'pass', message: 'Legal disclaimers detected.' };
@@ -187,223 +178,157 @@ const CHECKS = [
   }
 ];
 
-
 // =========================================
-// UNLOCK STATE HELPER
-// Reads from localStorage via window.SteamCheck API
+// HELPER FUNCTIONS
 // =========================================
 
 function isUnlocked() {
-  // Use the global API exposed by index.html, fallback to direct localStorage check
-  if (window.SteamCheck?.isUnlocked) {
+  if (window.SteamCheck && window.SteamCheck.isUnlocked) {
     return window.SteamCheck.isUnlocked();
   }
   return localStorage.getItem('steamcheck_unlocked') === 'true';
 }
 
-
-// =========================================
-// UPDATE LOCKED FEATURE ELEMENTS
-// Elements with .locked-feature class are disabled when locked
-// =========================================
-
 function updateLockedFeatures() {
-  const unlocked = isUnlocked();
-  const lockedElements = document.querySelectorAll('.locked-feature');
+  var unlocked = isUnlocked();
+  var elements = document.querySelectorAll('.locked-feature');
   
-  console.log(`[Main] updateLockedFeatures() - unlocked: ${unlocked}, elements: ${lockedElements.length}`);
-  
-  lockedElements.forEach(el => {
+  for (var i = 0; i < elements.length; i++) {
+    var el = elements[i];
     if (unlocked) {
       el.classList.remove('disabled');
       el.removeAttribute('disabled');
-      el.setAttribute('aria-disabled', 'false');
     } else {
       el.classList.add('disabled');
       el.setAttribute('disabled', 'true');
-      el.setAttribute('aria-disabled', 'true');
     }
-  });
+  }
 }
 
-
 // =========================================
-// RUN CHECKS
+// MAIN FUNCTIONS
 // =========================================
 
 function runCheck() {
   console.log('[Main] runCheck() called');
   
-  const urlInput = document.getElementById('steamUrl');
-  const textInput = document.getElementById('steamText');
-  const output = document.getElementById('output');
-  const summaryBar = document.getElementById('summaryBar');
+  var urlInput = document.getElementById('steamUrl');
+  var textInput = document.getElementById('steamText');
+  var output = document.getElementById('output');
+  var summaryBar = document.getElementById('summaryBar');
 
-  const url = urlInput?.value.trim() || '';
-  const text = textInput?.value.trim() || '';
+  var url = urlInput ? urlInput.value.trim() : '';
+  var text = textInput ? textInput.value.trim() : '';
 
-  // Validate input
   if (!url && !text) {
-    console.log('[Main] No input provided');
-    output.innerHTML = `
-      <div class="result warning">
-        <strong>⚠ Input Required</strong>
-        Please enter a Steam URL or paste your store page text.
-      </div>
-    `;
+    output.innerHTML = '<div class="result warning"><strong>⚠ Input Required</strong>Please enter a Steam URL or paste your store page text.</div>';
     summaryBar.innerHTML = '';
     return;
   }
 
-  // Determine content to analyze
-  const contentToCheck = text || `[URL provided: ${url}] — For full analysis, paste your store page text.`;
-  const unlocked = isUnlocked();
+  var contentToCheck = text || '[URL provided: ' + url + '] — For full analysis, paste your store page text.';
+  var unlocked = isUnlocked();
   
-  console.log(`[Main] Running checks - unlocked: ${unlocked}, content length: ${contentToCheck.length}`);
+  console.log('[Main] Running checks - unlocked: ' + unlocked);
 
-  // Initialize counters
-  const counts = { pass: 0, warning: 0, fail: 0, locked: 0 };
-  const results = [];
+  var passCount = 0;
+  var warningCount = 0;
+  var failCount = 0;
+  var lockedCount = 0;
+  var results = [];
 
-  // Execute each check
-  CHECKS.forEach(({ id, name, premium, check }) => {
-    if (premium && !unlocked) {
-      counts.locked++;
+  for (var i = 0; i < CHECKS.length; i++) {
+    var checkDef = CHECKS[i];
+    
+    if (checkDef.premium && !unlocked) {
+      lockedCount++;
       results.push({
-        id,
-        name,
+        name: checkDef.name,
         locked: true,
         severity: 'locked',
         message: 'Unlock premium checks to see this result.'
       });
     } else {
-      const result = check(contentToCheck);
-      counts[result.severity]++;
+      var result = checkDef.check(contentToCheck);
+      if (result.severity === 'pass') passCount++;
+      else if (result.severity === 'warning') warningCount++;
+      else if (result.severity === 'fail') failCount++;
+      
       results.push({
-        id,
-        name,
+        name: checkDef.name,
         locked: false,
-        ...result
+        severity: result.severity,
+        message: result.message
       });
     }
-  });
+  }
 
-  console.log('[Main] Check results:', counts);
+  console.log('[Main] Results - pass: ' + passCount + ', warning: ' + warningCount + ', fail: ' + failCount + ', locked: ' + lockedCount);
 
   // Render results
-  output.innerHTML = results.map(({ name, locked, severity, message }) => {
-    if (locked) {
-      return `
-        <div class="result locked">
-          <strong>🔒 ${name}</strong>
-          <span class="locked-message">${message}</span>
-        </div>
-      `;
+  var html = '';
+  for (var j = 0; j < results.length; j++) {
+    var r = results[j];
+    if (r.locked) {
+      html += '<div class="result locked"><strong>🔒 ' + r.name + '</strong><span class="locked-message">' + r.message + '</span></div>';
+    } else {
+      var icon = r.severity === 'pass' ? '✓' : (r.severity === 'warning' ? '⚠' : '✗');
+      html += '<div class="result ' + r.severity + '"><strong>' + icon + ' ' + r.name + '</strong>' + r.message + '</div>';
     }
-    
-    const icons = { pass: '✓', warning: '⚠', fail: '✗' };
-    const icon = icons[severity] || '•';
-    
-    return `
-      <div class="result ${severity}">
-        <strong>${icon} ${name}</strong>
-        ${message}
-      </div>
-    `;
-  }).join('');
+  }
+  output.innerHTML = html;
 
-  // Render summary bar
-  const summaryParts = [];
-  if (counts.pass > 0) summaryParts.push(`<span class="summary-pass">${counts.pass} Passed</span>`);
-  if (counts.warning > 0) summaryParts.push(`<span class="summary-warning">${counts.warning} Warnings</span>`);
-  if (counts.fail > 0) summaryParts.push(`<span class="summary-fail">${counts.fail} Failed</span>`);
-  if (counts.locked > 0) summaryParts.push(`<span class="summary-locked">${counts.locked} Locked</span>`);
-  
-  summaryBar.innerHTML = summaryParts.join('');
+  // Render summary
+  var summaryHTML = '';
+  if (passCount > 0) summaryHTML += '<span class="summary-pass">' + passCount + ' Passed</span>';
+  if (warningCount > 0) summaryHTML += '<span class="summary-warning">' + warningCount + ' Warnings</span>';
+  if (failCount > 0) summaryHTML += '<span class="summary-fail">' + failCount + ' Failed</span>';
+  if (lockedCount > 0) summaryHTML += '<span class="summary-locked">' + lockedCount + ' Locked</span>';
+  summaryBar.innerHTML = summaryHTML;
 }
-
-
-// =========================================
-// COPY RESULTS TO CLIPBOARD
-// =========================================
 
 function copyResults() {
   console.log('[Main] copyResults() called');
   
-  const output = document.getElementById('output');
-  const outputText = output?.textContent?.trim() || '';
+  var output = document.getElementById('output');
+  var outputText = output ? output.textContent.trim() : '';
   
   if (!outputText || outputText === 'No checks run yet.') {
     alert('Run a check first before copying results.');
     return;
   }
 
-  // Build formatted plain text
-  const results = output.querySelectorAll('.result');
-  const lines = ['Steam Page Check Results', '========================', ''];
+  var results = output.querySelectorAll('.result');
+  var lines = ['Steam Page Check Results', '========================', ''];
   
-  results.forEach(result => {
-    const title = result.querySelector('strong')?.textContent || '';
-    const message = result.textContent.replace(title, '').trim();
-    lines.push(title, message, '');
+  for (var i = 0; i < results.length; i++) {
+    var result = results[i];
+    var title = result.querySelector('strong');
+    var titleText = title ? title.textContent : '';
+    var message = result.textContent.replace(titleText, '').trim();
+    lines.push(titleText);
+    lines.push(message);
+    lines.push('');
+  }
+
+  var textContent = lines.join('\n');
+
+  navigator.clipboard.writeText(textContent).then(function() {
+    console.log('[Main] Results copied');
+    alert('Results copied to clipboard!');
+  }).catch(function(err) {
+    console.error('[Main] Copy failed:', err);
+    alert('Failed to copy results.');
   });
-
-  const textContent = lines.join('\n');
-
-  navigator.clipboard.writeText(textContent)
-    .then(() => {
-      console.log('[Main] Results copied to clipboard');
-      alert('Results copied to clipboard!');
-    })
-    .catch(err => {
-      console.error('[Main] Copy failed:', err);
-      alert('Failed to copy results. Please try selecting and copying manually.');
-    });
 }
-
-
-// =========================================
-// LOAD SAMPLE DATA
-// =========================================
 
 function loadSample() {
   console.log('[Main] loadSample() called');
   
-  const sampleText = `About This Game
+  var sampleText = 'About This Game\n\nWelcome to Pixel Quest Adventures - an epic retro-style platformer that combines classic gameplay with modern design!\n\nExplore vast worlds filled with challenging puzzles, dangerous enemies, and hidden secrets. Master unique abilities as you journey through forests, caves, deserts, and ancient temples.\n\nFeatures:\n- 50+ handcrafted levels across 5 unique worlds\n- Tight, responsive controls perfected for speedrunning\n- Original chiptune soundtrack with 20 tracks\n- Local co-op multiplayer for 2-4 players\n- Steam achievements and leaderboards\n\nSystem Requirements\n\nMinimum:\n- OS: Windows 10\n- Processor: Intel Core i3 or equivalent\n- Memory: 4 GB RAM\n- Graphics: Integrated graphics\n- Storage: 500 MB available space\n\nRecommended:\n- OS: Windows 10/11\n- Processor: Intel Core i5 or equivalent\n- Memory: 8 GB RAM\n- Graphics: Dedicated GPU with 2GB VRAM\n- Storage: 500 MB available space\n\nLanguages Supported: English, Spanish, French, German, Japanese, Chinese (Simplified)\n\n© 2024 Pixel Quest Studios. All rights reserved. Pixel Quest Adventures is a trademark of Pixel Quest Studios.';
 
-Welcome to Pixel Quest Adventures - an epic retro-style platformer that combines classic gameplay with modern design! 
-
-Explore vast worlds filled with challenging puzzles, dangerous enemies, and hidden secrets. Master unique abilities as you journey through forests, caves, deserts, and ancient temples.
-
-Features:
-- 50+ handcrafted levels across 5 unique worlds
-- Tight, responsive controls perfected for speedrunning
-- Original chiptune soundtrack with 20 tracks
-- Local co-op multiplayer for 2-4 players
-- Steam achievements and leaderboards
-
-System Requirements
-
-Minimum:
-- OS: Windows 10
-- Processor: Intel Core i3 or equivalent
-- Memory: 4 GB RAM
-- Graphics: Integrated graphics
-- Storage: 500 MB available space
-
-Recommended:
-- OS: Windows 10/11
-- Processor: Intel Core i5 or equivalent  
-- Memory: 8 GB RAM
-- Graphics: Dedicated GPU with 2GB VRAM
-- Storage: 500 MB available space
-
-Languages Supported: English, Spanish, French, German, Japanese, Chinese (Simplified)
-
-© 2024 Pixel Quest Studios. All rights reserved. Pixel Quest Adventures is a trademark of Pixel Quest Studios.`;
-
-  const urlInput = document.getElementById('steamUrl');
-  const textInput = document.getElementById('steamText');
+  var urlInput = document.getElementById('steamUrl');
+  var textInput = document.getElementById('steamText');
   
   if (textInput) textInput.value = sampleText;
   if (urlInput) urlInput.value = '';
@@ -411,88 +336,68 @@ Languages Supported: English, Spanish, French, German, Japanese, Chinese (Simpli
   runCheck();
 }
 
-
-// =========================================
-// TOGGLE LIGHT/DARK THEME
-// =========================================
-
 function toggleTheme() {
   console.log('[Main] toggleTheme() called');
   
   document.body.classList.toggle('light');
   
-  const isLight = document.body.classList.contains('light');
+  var isLight = document.body.classList.contains('light');
   localStorage.setItem('steamcheck_theme', isLight ? 'light' : 'dark');
   
-  console.log(`[Main] Theme set to: ${isLight ? 'light' : 'dark'}`);
+  console.log('[Main] Theme: ' + (isLight ? 'light' : 'dark'));
 }
 
 function loadThemePreference() {
-  const saved = localStorage.getItem('steamcheck_theme');
-  console.log(`[Main] Loading theme preference: ${saved || 'default (dark)'}`);
-  
+  var saved = localStorage.getItem('steamcheck_theme');
   if (saved === 'light') {
     document.body.classList.add('light');
   }
 }
 
-
 // =========================================
-// DOM READY - INITIALIZATION
+// INITIALIZATION
 // =========================================
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('[Main] DOM ready, initializing...');
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('[Main] DOM ready');
   
-  // Load saved theme preference
   loadThemePreference();
-  
-  // Update any locked feature elements
   updateLockedFeatures();
 
-  // Get button references
-  const buttons = {
-    runCheck: document.getElementById('runCheckBtn'),
-    copyResults: document.getElementById('copyResultsBtn'),
-    loadSample: document.getElementById('loadSampleBtn'),
-    toggleTheme: document.getElementById('toggleThemeBtn')
-  };
+  var runCheckBtn = document.getElementById('runCheckBtn');
+  var copyResultsBtn = document.getElementById('copyResultsBtn');
+  var loadSampleBtn = document.getElementById('loadSampleBtn');
+  var toggleThemeBtn = document.getElementById('toggleThemeBtn');
 
-  // Wire up event listeners
-  if (buttons.runCheck) {
-    buttons.runCheck.addEventListener('click', runCheck);
-    console.log('[Main] Run Check button wired');
+  if (runCheckBtn) {
+    runCheckBtn.addEventListener('click', runCheck);
+    console.log('[Main] Run Check button ready');
   }
   
-  if (buttons.copyResults) {
-    buttons.copyResults.addEventListener('click', copyResults);
-    console.log('[Main] Copy Results button wired');
+  if (copyResultsBtn) {
+    copyResultsBtn.addEventListener('click', copyResults);
+    console.log('[Main] Copy Results button ready');
   }
   
-  if (buttons.loadSample) {
-    buttons.loadSample.addEventListener('click', loadSample);
-    console.log('[Main] Load Sample button wired');
+  if (loadSampleBtn) {
+    loadSampleBtn.addEventListener('click', loadSample);
+    console.log('[Main] Load Sample button ready');
   }
   
-  if (buttons.toggleTheme) {
-    buttons.toggleTheme.addEventListener('click', toggleTheme);
-    console.log('[Main] Toggle Theme button wired');
+  if (toggleThemeBtn) {
+    toggleThemeBtn.addEventListener('click', toggleTheme);
+    console.log('[Main] Toggle Theme button ready');
   }
 
-  // Listen for unlock state changes from index.html
-  window.addEventListener('unlockStateChanged', (event) => {
-    console.log('[Main] unlockStateChanged event received:', event.detail);
-    
-    // Update any .locked-feature elements
+  window.addEventListener('unlockStateChanged', function(event) {
+    console.log('[Main] Unlock state changed');
     updateLockedFeatures();
     
-    // Re-run checks if results are currently displayed
-    const output = document.getElementById('output');
+    var output = document.getElementById('output');
     if (output && output.textContent !== 'No checks run yet.') {
-      console.log('[Main] Re-running checks after unlock');
       runCheck();
     }
   });
 
-  console.log('[Main] ✓ Initialization complete');
+  console.log('[Main] Init complete');
 });
