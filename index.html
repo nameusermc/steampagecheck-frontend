@@ -43,20 +43,24 @@
   <!-- Paddle Sandbox JS - MUST LOAD FIRST -->
   <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
 
-  <!-- Inline Paddle Initialization -->
   <script>
+    // =======================
+    // PADDLE CONFIG
+    // =======================
     const PADDLE_CLIENT_TOKEN = 'test_86bf96ddbab105199d721ee81ae';
     const PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
 
-    // Unlock state
-    let hasPaid = localStorage.getItem('unlocked') === 'true';
+    // Unlock state (single variable)
+    let unlocked = localStorage.getItem('unlocked') === 'true';
 
     function setUnlocked(state) {
-      hasPaid = state;
+      unlocked = state;
       if (state) localStorage.setItem('unlocked', 'true');
       else localStorage.removeItem('unlocked');
+      updateUnlockUI();
     }
 
+    // Initialize Paddle Sandbox - MUST be before any checkout call
     function initPaddle() {
       if (typeof Paddle === 'undefined') {
         console.error('Paddle SDK not loaded');
@@ -64,7 +68,6 @@
       }
 
       try {
-        // Must be before any checkout call
         Paddle.Environment.set('sandbox');
         console.log('Paddle sandbox environment set');
 
@@ -74,7 +77,6 @@
           if (e.data.event === 'Checkout.Complete') {
             console.log('Payment completed! Unlocking...');
             setUnlocked(true);
-            if (typeof renderChecks === 'function') renderChecks();
           }
         });
 
@@ -83,19 +85,38 @@
       }
     }
 
+    // Update UI based on unlock state
+    function updateUnlockUI() {
+      const unlockBtn = document.getElementById('unlockBtn');
+      if (!unlockBtn) return;
+
+      if (unlocked) unlockBtn.style.display = 'none';
+      else unlockBtn.style.display = 'inline-block';
+
+      // Example: disable locked elements if not unlocked
+      const lockedEls = document.querySelectorAll('.locked-feature');
+      lockedEls.forEach(el => el.disabled = !unlocked);
+    }
+
+    // Unlock button handler
+    function setupUnlockButton() {
+      const unlockBtn = document.getElementById('unlockBtn');
+      if (!unlockBtn) return;
+
+      unlockBtn.addEventListener('click', () => {
+        Paddle.Checkout.open({ product: PADDLE_PRICE_ID });
+      });
+    }
+
+    // DOM Ready
     document.addEventListener('DOMContentLoaded', () => {
       initPaddle();
-
-      const unlockBtn = document.getElementById('unlockBtn');
-      unlockBtn.addEventListener('click', () => {
-        Paddle.Checkout.open({
-          items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
-        });
-      });
+      setupUnlockButton();
+      updateUnlockUI();
     });
   </script>
 
-  <!-- Your app JS -->
+  <!-- Main app JS -->
   <script src="main.js"></script>
 </body>
 </html>
