@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Steam Page Check</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -15,18 +16,18 @@
       <p>Preflight your Steam store page against common review expectations before submission. Advisory only — not affiliated with Valve.</p>
     </div>
 
-    <label>Steam Store URL (public page)</label>
+    <label for="steamUrl">Steam Store URL (public page)</label>
     <input id="steamUrl" type="text" placeholder="https://store.steampowered.com/app/123456">
 
-    <label>Or paste your store page text</label>
+    <label for="steamText">Or paste your store page text</label>
     <textarea id="steamText" placeholder="Paste About This Game, Early Access notes, pricing info, etc."></textarea>
 
     <div class="buttons">
-      <button onclick="runCheck()">Run Check</button>
-      <button class="secondary" onclick="copyResults()">Copy Results</button>
-      <button class="ghost" onclick="loadSample()">Load Test Example</button>
-      <button class="ghost" onclick="toggleDarkMode()">Toggle Light/Dark</button>
-      <button class="secondary" id="unlockBtn">Unlock All Checks</button>
+      <button id="runCheckBtn">Run Check</button>
+      <button class="secondary" id="copyResultsBtn">Copy Results</button>
+      <button class="ghost" id="loadSampleBtn">Load Test Example</button>
+      <button class="ghost" id="toggleThemeBtn">Toggle Light/Dark</button>
+      <button class="secondary" id="unlockBtn">🔓 Unlock All Checks</button>
     </div>
 
     <div class="summary-bar" id="summaryBar"></div>
@@ -34,60 +35,173 @@
     <h2>Results</h2>
     <div id="output">No checks run yet.</div>
 
+    <div class="unlock-banner" id="unlockBanner">
+      <span class="unlock-icon">🔒</span>
+      <div class="unlock-text">
+        <strong>Premium checks are locked</strong>
+        <span>Unlock all 8 checks for a one-time payment</span>
+      </div>
+      <button id="unlockBannerBtn">Unlock Now</button>
+    </div>
+
+    <footer>
+      <p>Steam Page Check — Built for indie developers. Not affiliated with Valve Corporation.</p>
+    </footer>
+
   </div>
 
-  <!-- Paddle Billing SDK -->
-  <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+  <!-- Paddle Billing SDK (v2) -->
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
   <script>
-    // ------------------------
-    // PADDLE BILLING CONFIG
-    // ------------------------
+    // ================================================
+    // PADDLE BILLING CONFIGURATION
+    // ================================================
     const PADDLE_CLIENT_TOKEN = 'test_86bf96ddbab105199d721ee81ae';
     const PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
 
-    // Unlock state
-    let unlocked = localStorage.getItem('unlocked') === 'true';
+    // ================================================
+    // UNLOCK STATE MANAGEMENT
+    // ================================================
+    function isUnlocked() {
+      return localStorage.getItem('steamcheck_unlocked') === 'true';
+    }
 
     function setUnlocked(state) {
-      unlocked = state;
-      if (state) localStorage.setItem('unlocked', 'true');
-      else localStorage.removeItem('unlocked');
+      if (state) {
+        localStorage.setItem('steamcheck_unlocked', 'true');
+      } else {
+        localStorage.removeItem('steamcheck_unlocked');
+      }
       updateUnlockUI();
+      // Dispatch custom event so main.js can react
+      window.dispatchEvent(new CustomEvent('unlockStateChanged', { detail: { unlocked: state } }));
     }
 
     function updateUnlockUI() {
       const unlockBtn = document.getElementById('unlockBtn');
-      unlockBtn.style.display = unlocked ? 'none' : 'inline-block';
+      const unlockBanner = document.getElementById('unlockBanner');
+      const unlocked = isUnlocked();
+
+      if (unlockBtn) {
+        unlockBtn.style.display = unlocked ? 'none' : 'inline-block';
+        unlockBtn.textContent = unlocked ? '✓ Unlocked' : '🔓 Unlock All Checks';
+      }
+
+      if (unlockBanner) {
+        unlockBanner.style.display = unlocked ? 'none' : 'flex';
+      }
     }
 
+    // ================================================
+    // PADDLE BILLING INITIALIZATION
+    // ================================================
     function initPaddleBilling() {
       if (typeof Paddle === 'undefined') {
-        console.error('Paddle SDK not loaded');
+        // Paddle won't load in preview/sandbox - this is expected
+        showPaddleError();
         return;
       }
 
-      Paddle.Environment.set('sandbox'); // MUST be before any checkout call
-      Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN });
+      try {
+        // Initialize Paddle with environment and token
+        Paddle.Environment.set('sandbox');
+        Paddle.Initialize({
+          token: PADDLE_CLIENT_TOKEN,
+          eventCallback: function(event) {
+            console.log('Paddle event:', event);
+            
+            // Handle successful checkout completion
+            if (event.name === 'checkout.completed') {
+              console.log('Payment successful!', event.data);
+              setUnlocked(true);
+              showSuccessMessage();
+            }
+            
+            // Handle checkout closed without purchase
+            if (event.name === 'checkout.closed') {
+              console.log('Checkout closed');
+            }
+          }
+        });
 
-      // Listen for checkout events
-      Paddle.Event.register('Checkout.Complete', (data) => {
-        console.log('Payment completed!', data);
-        setUnlocked(true);
-      });
+        console.log('Paddle Billing initialized successfully');
+      } catch (error) {
+        console.error('Paddle initialization error:', error);
+        showPaddleError();
+      }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      initPaddleBilling();
+    function openCheckout() {
+      if (typeof Paddle === 'undefined' || !Paddle.Checkout) {
+        alert('Payment system is not available. Please refresh the page and try again.');
+        return;
+      }
 
-      const unlockBtn = document.getElementById('unlockBtn');
-      unlockBtn.addEventListener('click', () => {
+      try {
         Paddle.Checkout.open({
           items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
         });
-      });
+      } catch (error) {
+        console.error('Checkout error:', error);
+        alert('Unable to open checkout. Please try again.');
+      }
+    }
 
+    function showSuccessMessage() {
+      const output = document.getElementById('output');
+      if (output) {
+        output.innerHTML = `
+          <div class="result pass">
+            <strong>✓ Premium Unlocked!</strong>
+            All checks are now available. Run a check to see the full results.
+          </div>
+        `;
+      }
+    }
+
+    function showPaddleError() {
+      // In preview/sandbox environments, Paddle won't load - that's OK
+      // Just hide payment UI silently; app still works for testing
+      const unlockBtn = document.getElementById('unlockBtn');
+      const unlockBanner = document.getElementById('unlockBanner');
+      
+      if (unlockBtn) {
+        unlockBtn.title = 'Payment available when hosted on a live domain';
+        // Keep button visible but show it's unavailable in this environment
+        unlockBtn.textContent = '🔓 Unlock (requires hosting)';
+      }
+      
+      // Don't log error to console in preview - it's expected
+    }
+
+    // ================================================
+    // DOM READY - WIRE UP EVENT LISTENERS
+    // ================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Paddle
+      initPaddleBilling();
+
+      // Update UI based on current unlock state
       updateUnlockUI();
+
+      // Unlock button click handlers
+      const unlockBtn = document.getElementById('unlockBtn');
+      const unlockBannerBtn = document.getElementById('unlockBannerBtn');
+
+      if (unlockBtn) {
+        unlockBtn.addEventListener('click', openCheckout);
+      }
+
+      if (unlockBannerBtn) {
+        unlockBannerBtn.addEventListener('click', openCheckout);
+      }
+
+      // Expose unlock state checker globally for main.js
+      window.SteamCheck = {
+        isUnlocked: isUnlocked,
+        setUnlocked: setUnlocked
+      };
     });
   </script>
 

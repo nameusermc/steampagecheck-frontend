@@ -1,4 +1,8 @@
 /* ========================
+   STEAM PAGE CHECK - STYLES
+   ======================== */
+
+/* ========================
    GLOBAL BODY STYLES
    ======================== */
 body {
@@ -8,6 +12,7 @@ body {
   background: #1b2838;
   color: #f9fafb;
   transition: background 0.3s, color 0.3s;
+  min-height: 100vh;
 }
 
 body.light {
@@ -50,6 +55,10 @@ body.light .container {
   color: #c7d5e0;
 }
 
+body.light .header h1 {
+  color: #1b2838;
+}
+
 .accent {
   width: 64px;
   height: 4px;
@@ -66,9 +75,12 @@ body.light .container {
   margin-left: auto;
   margin-right: auto;
   color: #a0b3c0;
+  line-height: 1.5;
 }
 
-body.light .header p { color: #4b5563; }
+body.light .header p { 
+  color: #4b5563; 
+}
 
 /* ========================
    FORMS
@@ -78,6 +90,7 @@ label {
   margin-top: 22px;
   margin-bottom: 6px;
   font-weight: 600;
+  font-size: 14px;
 }
 
 input, textarea {
@@ -92,13 +105,28 @@ input, textarea {
   transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
 
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #66c0f4;
+  box-shadow: 0 0 0 3px rgba(102, 192, 244, 0.2);
+}
+
 body.light input, body.light textarea {
   background: #f9fafb;
   color: #111827;
   border: 1px solid #d1d5db;
 }
 
-textarea { resize: vertical; min-height: 120px; }
+body.light input:focus, body.light textarea:focus {
+  border-color: #66c0f4;
+  box-shadow: 0 0 0 3px rgba(102, 192, 244, 0.15);
+}
+
+textarea { 
+  resize: vertical; 
+  min-height: 120px; 
+  line-height: 1.5;
+}
 
 /* ========================
    BUTTONS
@@ -125,18 +153,58 @@ button {
 button:hover {
   background: #4ea0d4;
   transform: translateY(-1px);
-  opacity: 0.95;
 }
 
-button.secondary { background: #6b7280; color: #fff; }
-button.secondary:hover { background: #4b5563; }
-button.ghost { background: #2a3c4f; color: #c7d5e0; }
-button.ghost:hover { background: #1e2a3b; }
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+button.secondary { 
+  background: #6b7280; 
+  color: #fff; 
+}
+
+button.secondary:hover { 
+  background: #4b5563; 
+}
+
+button.ghost { 
+  background: #2a3c4f; 
+  color: #c7d5e0; 
+}
+
+button.ghost:hover { 
+  background: #1e2a3b; 
+}
+
+body.light button.ghost {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+body.light button.ghost:hover {
+  background: #d1d5db;
+}
 
 /* ========================
    HEADINGS
    ======================== */
-h2 { margin-top: 44px; margin-bottom: 14px; font-size: 22px; }
+h2 { 
+  margin-top: 44px; 
+  margin-bottom: 14px; 
+  font-size: 22px; 
+  color: #c7d5e0;
+}
+
+body.light h2 {
+  color: #1b2838;
+}
 
 /* ========================
    SUMMARY BAR
@@ -146,86 +214,228 @@ h2 { margin-top: 44px; margin-bottom: 14px; font-size: 22px; }
   gap: 12px;
   margin: 18px 0;
   font-weight: 600;
+  flex-wrap: wrap;
 }
 
 .summary-bar span {
   padding: 6px 12px;
   border-radius: 8px;
   color: white;
+  font-size: 14px;
   transition: transform 0.2s;
 }
 
-.summary-bar span:hover { transform: scale(1.05); }
+.summary-bar span:hover { 
+  transform: scale(1.05); 
+}
 
-.summary-pass { background: #10b981; }
-.summary-warning { background: #f59e0b; }
-.summary-fail { background: #ef4444; }
+.summary-pass { 
+  background: #10b981; 
+}
+
+.summary-warning { 
+  background: #f59e0b; 
+}
+
+.summary-fail { 
+  background: #ef4444; 
+}
+
+.summary-locked {
+  background: #6b7280;
+}
 
 /* ========================
    RESULTS CARDS
    ======================== */
+#output {
+  min-height: 60px;
+}
+
 .result {
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 12px;
   border-left: 6px solid;
   transition: transform 0.2s, box-shadow 0.2s;
+  line-height: 1.5;
 }
 
-.result:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.result:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+}
 
-.pass { background: #064e3b; border-color: #10b981; color: #d1fae5; }
-.warning { background: #78350f; border-color: #f59e0b; color: #fef3c7; }
-.fail { background: #7f1d1d; border-color: #ef4444; color: #fee2e2; }
+.result strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
 
-body.light .pass { background: #ecfdf5; border-color: #10b981; color: #065f46; }
-body.light .warning { background: #fffbeb; border-color: #f59e0b; color: #78350f; }
-body.light .fail { background: #fef2f2; border-color: #ef4444; color: #7f1d1d; }
+/* Pass state */
+.result.pass { 
+  background: #064e3b; 
+  border-color: #10b981; 
+  color: #d1fae5; 
+}
 
-.result strong { display: block; margin-bottom: 6px; font-size: 15px; }
+body.light .result.pass { 
+  background: #ecfdf5; 
+  border-color: #10b981; 
+  color: #065f46; 
+}
 
-.suggested-fix {
-  margin-top: 8px;
+/* Warning state */
+.result.warning { 
+  background: #78350f; 
+  border-color: #f59e0b; 
+  color: #fef3c7; 
+}
+
+body.light .result.warning { 
+  background: #fffbeb; 
+  border-color: #f59e0b; 
+  color: #78350f; 
+}
+
+/* Fail state */
+.result.fail { 
+  background: #7f1d1d; 
+  border-color: #ef4444; 
+  color: #fee2e2; 
+}
+
+body.light .result.fail { 
+  background: #fef2f2; 
+  border-color: #ef4444; 
+  color: #7f1d1d; 
+}
+
+/* Locked state */
+.result.locked {
   background: #1f2937;
-  padding: 10px;
-  border-radius: 6px;
-  display: none;
+  border-color: #6b7280;
+  color: #9ca3af;
+  opacity: 0.7;
 }
 
-body.light .suggested-fix { background: #f3f4f6; }
+body.light .result.locked {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+  color: #6b7280;
+}
 
-.toggle-fix { color: #66c0f4; cursor: pointer; font-size: 13px; margin-top: 4px; display: inline-block; }
+.result.locked strong {
+  color: #9ca3af;
+}
+
+body.light .result.locked strong {
+  color: #6b7280;
+}
+
+.locked-message {
+  font-style: italic;
+}
+
+/* ========================
+   UNLOCK BANNER
+   ======================== */
+.unlock-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
+  border: 1px solid #66c0f4;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+body.light .unlock-banner {
+  background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+  border-color: #0ea5e9;
+}
+
+.unlock-icon {
+  font-size: 32px;
+}
+
+.unlock-text {
+  flex: 1;
+}
+
+.unlock-text strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: #c7d5e0;
+}
+
+body.light .unlock-text strong {
+  color: #0c4a6e;
+}
+
+.unlock-text span {
+  font-size: 14px;
+  color: #a0b3c0;
+}
+
+body.light .unlock-text span {
+  color: #475569;
+}
+
+.unlock-banner button {
+  white-space: nowrap;
+}
 
 /* ========================
    FOOTER
    ======================== */
-footer { margin-top: 36px; font-size: 12px; color: #9ca3af; text-align: center; }
-body.light footer { color: #6b7280; }
+footer { 
+  margin-top: 36px; 
+  padding-top: 20px;
+  border-top: 1px solid #2a3c4f;
+  font-size: 12px; 
+  color: #9ca3af; 
+  text-align: center; 
+}
+
+body.light footer { 
+  color: #6b7280;
+  border-top-color: #e5e7eb;
+}
+
+footer p {
+  margin: 0;
+}
 
 /* ========================
-   PAYMENT CHECK CARDS
+   RESPONSIVE
    ======================== */
-.check-card {
-  border-radius: 8px;
-  padding: 14px;
-  margin-bottom: 12px;
-  background: #0d1b2a;
-  color: #c7d5e0;
-  transition: background 0.3s, color 0.3s, opacity 0.3s;
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: 24px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons button {
+    width: 100%;
+  }
+
+  .unlock-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .unlock-banner button {
+    width: 100%;
+  }
 }
-
-body.light .check-card { background: #f9fafb; color: #111827; }
-
-.check-card.locked { opacity: 0.5; }
-.check-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: #66c0f4;
-  color: #111827;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.check-hint { font-size: 13px; color: #a0b3c0; margin-top: 4px; }
