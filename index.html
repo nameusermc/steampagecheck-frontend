@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="style.css">
-
   <meta charset="UTF-8">
   <title>Steam Page Check</title>
- 
 </head>
 <body>
 
@@ -58,16 +56,14 @@
 
       try {
         const res = await fetch("https://steampagecheck-backend.onrender.com/check", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
         const data = await res.json();
         output.innerHTML = "";
 
-        // build summary
         const counts = data.severity_counts;
         if (counts.pass) summaryBar.innerHTML += `<span class="summary-pass">✅ Pass: ${counts.pass}</span>`;
         if (counts.warning) summaryBar.innerHTML += `<span class="summary-warning">⚠️ Warning: ${counts.warning}</span>`;
