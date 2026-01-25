@@ -1,20 +1,7 @@
-// =====================
-// UI / APP LOGIC
-// =====================
+// =======================
+// APP LOGIC
+// =======================
 
-// Update UI based on unlock state
-function updateUnlockUI() {
-  const unlockBtn = document.getElementById('unlockBtn');
-  if (hasPaid) unlockBtn.style.display = 'none';
-  else unlockBtn.style.display = 'inline-block';
-
-  // Example: disable locked features
-  document.querySelectorAll('.locked-feature').forEach(el => {
-    el.disabled = !hasPaid;
-  });
-}
-
-// Run Steam page checks
 function runCheck() {
   const url = document.getElementById('steamUrl').value.trim();
   const text = document.getElementById('steamText').value.trim();
@@ -27,6 +14,7 @@ function runCheck() {
   }
 
   const results = [];
+
   if (text.toLowerCase().includes('early access')) {
     results.push({ severity: 'FAIL', message: 'Early Access disclaimer detected' });
   } else {
@@ -37,28 +25,17 @@ function runCheck() {
   summaryBar.textContent = `Total checks: ${results.length}`;
 }
 
-// Copy results
 function copyResults() {
   const output = document.getElementById('output');
   if (!output.textContent) return;
-  navigator.clipboard.writeText(output.textContent).then(() => {
-    alert('Results copied to clipboard!');
-  });
+  navigator.clipboard.writeText(output.textContent).then(() => alert('Results copied to clipboard!'));
 }
 
-// Load sample data
 function loadSample() {
-  document.getElementById('steamText').value = `Sample game description here.`;
+  document.getElementById('steamText').value = 'Sample game description here.';
   runCheck();
 }
 
-// Toggle dark mode
 function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
 }
-
-// Initialize DOM listeners
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('steamUrl').addEventListener('input', runCheck);
-  document.getElementById('steamText').addEventListener('input', runCheck);
-});
