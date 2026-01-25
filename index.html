@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <title>Steam Page Check</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="container">
     <div class="header">
       <h1>Steam Page Check</h1>
@@ -38,29 +39,22 @@
     <footer>steampagecheck.com · Not affiliated with Valve or Steam</footer>
   </div>
 
-  <!-- Paddle Sandbox JS -->
+  <!-- Paddle Billing JS -->
   <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
 
-  <!-- Paddle Inline Init -->
+  <!-- Inline Paddle Initialization -->
   <script>
     const PADDLE_CLIENT_TOKEN = 'test_86bf96ddbab105199d721ee81ae';
     const PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
-    const PADDLE_VENDOR_ID = 'YOUR_VENDOR_ID_HERE'; // replace with your Paddle vendor ID
 
-    let unlocked = localStorage.getItem('unlocked') === 'true';
+    // Unlock state
+    let hasPaid = localStorage.getItem('unlocked') === 'true';
 
     function setUnlocked(state) {
-      unlocked = state;
+      hasPaid = state;
       if (state) localStorage.setItem('unlocked', 'true');
       else localStorage.removeItem('unlocked');
       updateUnlockUI();
-    }
-
-    function updateUnlockUI() {
-      const unlockBtn = document.getElementById('unlockBtn');
-      if (unlockBtn) unlockBtn.style.display = unlocked ? 'none' : 'inline-block';
-      const lockedElements = document.querySelectorAll('.locked-feature');
-      lockedElements.forEach(el => el.disabled = !unlocked);
     }
 
     function initPaddle() {
@@ -70,18 +64,21 @@
       }
 
       try {
-        Paddle.Environment.set('sandbox');
-        Paddle.Setup({ vendor: PADDLE_VENDOR_ID });
-        console.log('Paddle sandbox and setup initialized');
-
-        window.addEventListener('message', function(e) {
-          if (!e.data || !e.data.event) return;
-          if (e.data.event === 'Checkout.Complete') {
-            console.log('Payment completed! Unlocking...');
-            setUnlocked(true);
+        Paddle.Environment.set('sandbox'); // MUST be before any checkout
+        Paddle.Initialize({
+          token: PADDLE_CLIENT_TOKEN,
+          eventCallback: function(data) {
+            console.log('PADDLE EVENT:', data.name, data);
+            if (data.name === 'checkout.completed') {
+              console.log('Payment completed! Unlocking...');
+              setUnlocked(true);
+              setTimeout(() => {
+                Paddle.Checkout.close();
+              }, 500);
+            }
           }
         });
-
+        console.log('Paddle initialized successfully (Billing)');
       } catch (err) {
         console.error('Paddle initialization failed:', err);
       }
@@ -91,18 +88,15 @@
       initPaddle();
 
       const unlockBtn = document.getElementById('unlockBtn');
-      if (unlockBtn) {
-        unlockBtn.addEventListener('click', () => {
-          Paddle.Checkout.open({
-            items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
-          });
+      unlockBtn.addEventListener('click', () => {
+        Paddle.Checkout.open({
+          items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
         });
-      }
-
-      updateUnlockUI();
+      });
     });
   </script>
 
+  <!-- App logic -->
   <script src="main.js"></script>
 </body>
 </html>
