@@ -1,102 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <link rel="stylesheet" href="style.css">
-  <meta charset="UTF-8">
-  <title>Steam Page Check</title>
-</head>
-<body>
+<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
 
-  <div class="container">
-    <div class="header">
-      <h1>Steam Page Check</h1>
-      <div class="accent"></div>
-      <p>Preflight your Steam store page against common review expectations before submission. Advisory only — not affiliated with Valve.</p>
-    </div>
+<script>
+  const PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
+  let hasPaid = localStorage.getItem('unlocked') === 'true';
 
-    <label>Steam Store URL (public page)</label>
-    <input id="steamUrl" type="text" placeholder="https://store.steampowered.com/app/123456">
+  function setUnlocked(state) {
+    hasPaid = state;
+    if (state) localStorage.setItem('unlocked', 'true');
+    else localStorage.removeItem('unlocked');
+    updateUnlockUI();
+  }
 
-    <label>Or paste your store page text</label>
-    <textarea id="steamText" placeholder="Paste About This Game, Early Access notes, pricing info, etc."></textarea>
+  // Set environment
+  Paddle.Environment.set('sandbox');
 
-    <div class="buttons">
-      <button onclick="runCheck()">Run Check</button>
-      <button class="secondary" onclick="copyResults()">Copy Results</button>
-      <button class="ghost" onclick="loadSample()">Load Test Example</button>
-      <button class="ghost" onclick="toggleDarkMode()">Toggle Light/Dark</button>
-      <button class="secondary" id="unlockBtn">Unlock All Checks</button>
-    </div>
-
-    <div class="summary-bar" id="summaryBar"></div>
-
-    <h2>Results</h2>
-    <div id="output">No checks run yet.</div>
-
-    <h2>Check Access</h2>
-    <div id="results-container"></div>
-
-    <footer>steampagecheck.com · Not affiliated with Valve or Steam</footer>
-  </div>
-
-  <!-- Paddle Billing JS -->
-  <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
-
-  <!-- Inline Paddle Initialization -->
-  <script>
-    const PADDLE_CLIENT_TOKEN = 'test_86bf96ddbab105199d721ee81ae';
-    const PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
-
-    // Unlock state
-    let hasPaid = localStorage.getItem('unlocked') === 'true';
-
-    function setUnlocked(state) {
-      hasPaid = state;
-      if (state) localStorage.setItem('unlocked', 'true');
-      else localStorage.removeItem('unlocked');
-      updateUnlockUI();
+  // Listen for checkout completion
+  window.addEventListener('message', function(e) {
+    if (!e.data || !e.data.event) return;
+    if (e.data.event === 'Checkout.Complete') {
+      console.log('Payment completed! Unlocking...');
+      setUnlocked(true);
     }
+  });
 
-    function initPaddle() {
-      if (typeof Paddle === 'undefined') {
-        console.error('Paddle SDK not loaded');
-        return;
-      }
-
-      try {
-        Paddle.Environment.set('sandbox'); // MUST be before any checkout
-        Paddle.Initialize({
-          token: PADDLE_CLIENT_TOKEN,
-          eventCallback: function(data) {
-            console.log('PADDLE EVENT:', data.name, data);
-            if (data.name === 'checkout.completed') {
-              console.log('Payment completed! Unlocking...');
-              setUnlocked(true);
-              setTimeout(() => {
-                Paddle.Checkout.close();
-              }, 500);
-            }
-          }
-        });
-        console.log('Paddle initialized successfully (Billing)');
-      } catch (err) {
-        console.error('Paddle initialization failed:', err);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      initPaddle();
-
-      const unlockBtn = document.getElementById('unlockBtn');
-      unlockBtn.addEventListener('click', () => {
-        Paddle.Checkout.open({
-          items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
-        });
+  document.addEventListener('DOMContentLoaded', () => {
+    const unlockBtn = document.getElementById('unlockBtn');
+    unlockBtn.addEventListener('click', () => {
+      Paddle.Checkout.open({
+        items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
       });
     });
-  </script>
-
-  <!-- App logic -->
-  <script src="main.js"></script>
-</body>
-</html>
+  });
+</script>
