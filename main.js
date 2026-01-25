@@ -2,49 +2,48 @@
 // APP LOGIC
 // =====================
 
-// Run your Steam page checks
 function runCheck() {
-    const url = document.getElementById('steamUrl').value.trim();
-    const text = document.getElementById('steamText').value.trim();
-    const output = document.getElementById('output');
-    const summaryBar = document.getElementById('summaryBar');
+  const url = document.getElementById('steamUrl').value.trim();
+  const text = document.getElementById('steamText').value.trim();
+  const output = document.getElementById('output');
+  const summaryBar = document.getElementById('summaryBar');
 
-    if (!url && !text) {
-        output.innerHTML = 'Please enter a Steam URL or paste your store page text.';
-        return;
-    }
+  if (!url && !text) {
+    output.innerHTML = 'Please enter a Steam URL or paste your store page text.';
+    return;
+  }
 
-    const results = [];
-    if (text.toLowerCase().includes('early access')) {
-        results.push({ severity: 'FAIL', message: 'Early Access disclaimer detected' });
-    } else {
-        results.push({ severity: 'PASS', message: 'No Early Access issues found' });
-    }
+  const results = [];
 
-    output.innerHTML = results.map(r => `<p><strong>${r.severity}:</strong> ${r.message}</p>`).join('');
-    summaryBar.textContent = `Total checks: ${results.length}`;
+  if (text.toLowerCase().includes('early access')) {
+    results.push({ severity: 'FAIL', message: 'Early Access disclaimer detected' });
+  } else {
+    results.push({ severity: 'PASS', message: 'No Early Access issues found' });
+  }
+
+  output.innerHTML = results.map(r => `<p><strong>${r.severity}:</strong> ${r.message}</p>`).join('');
+  summaryBar.textContent = `Total checks: ${results.length}`;
 }
 
-// Copy results to clipboard
 function copyResults() {
-    const output = document.getElementById('output');
-    if (!output.textContent) return;
-    navigator.clipboard.writeText(output.textContent).then(() => alert('Results copied to clipboard!'));
+  const output = document.getElementById('output');
+  if (!output.textContent) return;
+
+  navigator.clipboard.writeText(output.textContent).then(() => {
+    alert('Results copied to clipboard!');
+  });
 }
 
-// Load sample test data
 function loadSample() {
-    document.getElementById('steamText').value = `Sample game description here.`;
-    runCheck();
+  document.getElementById('steamText').value = 'Sample game description with no Early Access.';
+  runCheck();
 }
 
-// Toggle dark mode
 function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
+  document.body.classList.toggle('dark-mode');
 }
 
-// DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('steamUrl').addEventListener('input', runCheck);
-    document.getElementById('steamText').addEventListener('input', runCheck);
+  document.getElementById('steamUrl').addEventListener('input', runCheck);
+  document.getElementById('steamText').addEventListener('input', runCheck);
 });
