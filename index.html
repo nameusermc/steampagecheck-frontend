@@ -1,57 +1,101 @@
-<script>
-  const PADDLE_CLIENT_TOKEN = 'test_86bf96ddbab105199d721ee81ae';
-  const PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Steam Page Check</title>
+</head>
+<body>
 
-  // Unlock state
-  let hasPaid = localStorage.getItem('unlocked') === 'true';
+  <div class="container">
 
-  function setUnlocked(state) {
-    hasPaid = state;
-    if (state) localStorage.setItem('unlocked', 'true');
-    else localStorage.removeItem('unlocked');
-  }
+    <div class="header">
+      <h1>Steam Page Check</h1>
+      <div class="accent"></div>
+      <p>Preflight your Steam store page against common review expectations before submission. Advisory only — not affiliated with Valve.</p>
+    </div>
 
-  function initPaddle() {
-    if (typeof Paddle === 'undefined') {
-      console.error('Paddle SDK not loaded');
-      return;
+    <label>Steam Store URL (public page)</label>
+    <input id="steamUrl" type="text" placeholder="https://store.steampowered.com/app/123456">
+
+    <label>Or paste your store page text</label>
+    <textarea id="steamText" placeholder="Paste About This Game, Early Access notes, pricing info, etc."></textarea>
+
+    <div class="buttons">
+      <button onclick="runCheck()">Run Check</button>
+      <button class="secondary" onclick="copyResults()">Copy Results</button>
+      <button class="ghost" onclick="loadSample()">Load Test Example</button>
+      <button class="ghost" onclick="toggleDarkMode()">Toggle Light/Dark</button>
+      <button class="secondary" id="unlockBtn">Unlock All Checks</button>
+    </div>
+
+    <div class="summary-bar" id="summaryBar"></div>
+
+    <h2>Results</h2>
+    <div id="output">No checks run yet.</div>
+
+    <h2>Check Access</h2>
+    <div id="results-container"></div>
+
+    <footer>steampagecheck.com · Not affiliated with Valve or Steam</footer>
+  </div>
+
+  <!-- Paddle Sandbox JS - MUST LOAD FIRST -->
+  <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+
+  <!-- Inline Paddle Initialization -->
+  <script>
+    const PADDLE_CLIENT_TOKEN = 'test_86bf96ddbab105199d721ee81ae';
+    const PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
+
+    // Unlock state
+    let hasPaid = localStorage.getItem('unlocked') === 'true';
+
+    function setUnlocked(state) {
+      hasPaid = state;
+      if (state) localStorage.setItem('unlocked', 'true');
+      else localStorage.removeItem('unlocked');
     }
 
-    try {
-      // Must be before any checkout call
-      Paddle.Environment.set('sandbox');
-      console.log('Paddle sandbox environment set');
+    function initPaddle() {
+      if (typeof Paddle === 'undefined') {
+        console.error('Paddle SDK not loaded');
+        return;
+      }
 
-      // Event callback is only needed for checkout completion
-      // Note: latest SDK does not have Paddle.Initialize()
-      // Checkout events are handled through global event listeners
-      Paddle.Setup({ vendor: YOUR_VENDOR_ID }); // Optional: only if needed
+      try {
+        // Must be before any checkout call
+        Paddle.Environment.set('sandbox');
+        console.log('Paddle sandbox environment set');
 
-      // Listen for checkout completion
-      window.addEventListener('message', function(e) {
-        if (!e.data || !e.data.event) return;
-        if (e.data.event === 'Checkout.Complete') {
-          console.log('Payment completed! Unlocking...');
-          setUnlocked(true);
-          // Refresh UI if needed
-          if (typeof renderChecks === 'function') renderChecks();
-        }
-      });
+        // Listen for checkout completion via postMessage
+        window.addEventListener('message', function(e) {
+          if (!e.data || !e.data.event) return;
+          if (e.data.event === 'Checkout.Complete') {
+            console.log('Payment completed! Unlocking...');
+            setUnlocked(true);
+            if (typeof renderChecks === 'function') renderChecks();
+          }
+        });
 
-    } catch (err) {
-      console.error('Paddle initialization failed:', err);
+      } catch (err) {
+        console.error('Paddle initialization failed:', err);
+      }
     }
-  }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    initPaddle();
+    document.addEventListener('DOMContentLoaded', () => {
+      initPaddle();
 
-    const unlockBtn = document.getElementById('unlockBtn');
-    unlockBtn.addEventListener('click', () => {
-      Paddle.Checkout.open({
-        product: PADDLE_PRICE_ID, // sandbox product
-        // optional: email, passthrough, etc.
+      const unlockBtn = document.getElementById('unlockBtn');
+      unlockBtn.addEventListener('click', () => {
+        Paddle.Checkout.open({
+          product: PADDLE_PRICE_ID
+        });
       });
     });
-  });
-</script>
+  </script>
+
+  <!-- Your app JS -->
+  <script src="main.js"></script>
+</body>
+</html>
