@@ -89,7 +89,7 @@
       const unlockBtn = document.getElementById('unlockBtn');
       unlockBtn.addEventListener('click', () => {
         Paddle.Checkout.open({
-          product: PADDLE_PRICE_ID
+          items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
         });
       });
     });
