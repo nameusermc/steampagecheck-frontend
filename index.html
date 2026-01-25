@@ -1,177 +1,294 @@
-<!-- Steam Page Compliance Checker Frontend JS + Paddle Integration -->
-<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
-<script>
-/* ==============================================
-   CONFIGURATION
-   ============================================== */
-const FREE_LIMIT = 3; // number of checks free users can run
-let hasPaid = false;
-let completedChecks = 0;
-
-// Paddle Sandbox Credentials (from other utilities)
-const PADDLE_CLIENT_TOKEN = 'test_c2deb3cb9b85f4b2afcd596c107';
-const PADDLE_PRICE_ID = 'pri_01kfc8wsrhhqezk6htxdy7eppe';
-
-/* ==============================================
-   PADDLE INITIALIZATION
-   ============================================== */
-if (typeof Paddle !== 'undefined') {
-    try {
-        // Force sandbox mode
-        Paddle.Environment.set('sandbox');
-        console.log('Paddle environment set to sandbox');
-
-        // Initialize Paddle billing
-        Paddle.Initialize({
-            token: PADDLE_CLIENT_TOKEN,
-            eventCallback: function(data) {
-                console.log('PADDLE EVENT:', data.name, data);
-
-                // Unlock checks on successful payment
-                if (data.name === 'checkout.completed') {
-                    console.log('Payment completed! Unlocking all checks...');
-                    hasPaid = true;
-
-                    setTimeout(function() {
-                        Paddle.Checkout.close();
-                        renderChecks(); // refresh UI to unlock all
-                    }, 500);
-                }
-            }
-        });
-
-        console.log('Paddle initialized successfully');
-    } catch (error) {
-        console.error('Paddle initialization failed:', error);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Steam Page Check</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1b2838; /* dark mode default */
+      color: #f9fafb;
+      transition: background 0.3s, color 0.3s;
     }
-} else {
-    console.error('Paddle SDK not loaded');
-}
 
-/* ==============================================
-   FREE VS PAID CHECK UI RENDERING
-   ============================================== */
-function renderChecks() {
-    const resultsContainer = document.getElementById("results-container");
-    resultsContainer.innerHTML = ""; // clear previous results
+    body.light {
+      background: #e6e7eb;
+      color: #111827;
+    }
 
-    const checks = [
-        "Refund Policy Reference",
-        "Clear Pricing Language",
-        "Early Access Disclaimer",
-        "Multiplayer / Network Disclaimer",
-        "Controller Support Consistency",
-        "VR Support Consistency",
-        "Age-Sensitive Content Disclosure",
-        "Screenshot Count",
-        "Screenshot Aspect Ratio",
-        "External Support Links"
-    ];
+    .container {
+      max-width: 920px;
+      margin: 40px auto;
+      background: #0d1b2a; /* darker Steam-inspired dark panel */
+      padding: 36px;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    }
 
-    checks.forEach((check, index) => {
-        const isLocked = !hasPaid && index >= FREE_LIMIT;
+    body.light .container {
+      background: #ffffff;
+      color: #111827;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
 
-        // Create card container
-        const card = document.createElement("div");
-        card.className = "check-card" + (isLocked ? " locked" : "");
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
 
-        // Badge
-        const badge = document.createElement("span");
-        badge.className = "check-badge";
-        badge.textContent = isLocked ? "LOCKED" : "AVAILABLE";
-        card.appendChild(badge);
+    .header h1 {
+      margin: 0;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #c7d5e0; /* Steam-light header */
+    }
 
-        // Title
-        const title = document.createElement("h3");
-        title.textContent = check;
-        card.appendChild(title);
+    .accent {
+      width: 64px;
+      height: 4px;
+      background: #66c0f4; /* Steam blue accent */
+      margin: 14px auto 16px auto;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
 
-        // Hint for locked checks
-        if (isLocked) {
-            const hint = document.createElement("p");
-            hint.className = "check-hint";
-            hint.textContent = "Unlock full access via one-time purchase";
-            card.appendChild(hint);
-        }
+    .header p {
+      margin: 0;
+      font-size: 15px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #a0b3c0;
+    }
 
-        resultsContainer.appendChild(card);
-    });
-}
+    body.light .header p { color: #4b5563; }
 
-/* ==============================================
-   PADDLE CHECKOUT TRIGGER
-   ============================================== */
-function buyFullAccess() {
-    Paddle.Checkout.open({
-        product: PADDLE_PRICE_ID,
-        title: "Steam Page Compliance Checker - Full Access",
-        allowQuantity: false,
-        sandbox: true // ensure sandbox mode
-    });
-}
+    label {
+      display: block;
+      margin-top: 22px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
 
-/* ==============================================
-   INITIALIZE ON PAGE LOAD
-   ============================================== */
-document.addEventListener("DOMContentLoaded", function() {
-    renderChecks();
-});
+    input, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px 12px;
+      border-radius: 8px;
+      border: 1px solid #3a475a;
+      font-size: 14px;
+      background: #1b2838;
+      color: #f9fafb;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
 
-</script>
+    body.light input, body.light textarea {
+      background: #f9fafb;
+      color: #111827;
+      border: 1px solid #d1d5db;
+    }
 
-<!-- ==============================================
-     CHECKS CONTAINER + PURCHASE BUTTON
-     ============================================== -->
-<div id="results-container" style="display:flex; flex-wrap:wrap; gap:16px; justify-content:center; padding:20px;"></div>
+    textarea { resize: vertical; min-height: 120px; }
 
-<div style="text-align:center; margin:20px;">
-    <button onclick="buyFullAccess()" style="
-        background-color:#0078d7;
-        color:#fff;
-        border:none;
-        border-radius:8px;
-        padding:12px 24px;
-        font-size:16px;
-        cursor:pointer;
-    ">Unlock Full Checks</button>
-</div>
+    .buttons {
+      margin-top: 22px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-<!-- ==============================================
-     STYLING FOR CHECK CARDS
-     ============================================== -->
-<style>
-.check-card {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
-    border-radius: 12px;
-    padding: 12px 16px;
-    width: 220px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
-    margin-bottom: 16px;
-}
+    button {
+      padding: 11px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: #66c0f4; /* Steam blue */
+      color: #111827;
+      transition: background 0.2s, transform 0.2s, opacity 0.2s;
+    }
 
-.check-card:hover { transform: translateY(-2px); }
+    button:hover {
+      background: #4ea0d4;
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
 
-.check-card.locked { opacity: 0.6; }
+    button.secondary { background: #6b7280; color: #fff; }
+    button.secondary:hover { background: #4b5563; }
+    button.ghost { background: #2a3c4f; color: #c7d5e0; }
+    button.ghost:hover { background: #1e2a3b; }
 
-.check-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
+    h2 { margin-top: 44px; margin-bottom: 14px; font-size: 22px; }
 
-.check-card.locked .check-badge { background-color: #b04040; color: #fff; }
-.check-card:not(.locked) .check-badge { background-color: #40b040; color: #fff; }
+    .summary-bar {
+      display: flex;
+      gap: 12px;
+      margin: 18px 0;
+      font-weight: 600;
+    }
 
-.check-hint {
-    font-size: 12px;
-    color: #aaaaaa;
-    margin-top: 6px;
-}
+    .summary-bar span {
+      padding: 6px 12px;
+      border-radius: 8px;
+      color: white;
+      transition: transform 0.2s;
+    }
 
-h3 { margin: 0; font-size: 16px; }
-</style>
+    .summary-bar span:hover { transform: scale(1.05); }
+
+    .summary-pass { background: #10b981; }
+    .summary-warning { background: #f59e0b; }
+    .summary-fail { background: #ef4444; }
+
+    .result {
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      border-left: 6px solid;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .result:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+
+    .pass { background: #064e3b; border-color: #10b981; color: #d1fae5; }
+    .warning { background: #78350f; border-color: #f59e0b; color: #fef3c7; }
+    .fail { background: #7f1d1d; border-color: #ef4444; color: #fee2e2; }
+
+    body.light .pass { background: #ecfdf5; border-color: #10b981; color: #065f46; }
+    body.light .warning { background: #fffbeb; border-color: #f59e0b; color: #78350f; }
+    body.light .fail { background: #fef2f2; border-color: #ef4444; color: #7f1d1d; }
+
+    .result strong { display: block; margin-bottom: 6px; font-size: 15px; }
+
+    .suggested-fix {
+      margin-top: 8px;
+      background: #1f2937;
+      padding: 10px;
+      border-radius: 6px;
+      display: none;
+    }
+
+    body.light .suggested-fix { background: #f3f4f6; }
+
+    .toggle-fix { color: #66c0f4; cursor: pointer; font-size: 13px; margin-top: 4px; display: inline-block; }
+
+    footer { margin-top: 36px; font-size: 12px; color: #9ca3af; text-align: center; }
+    body.light footer { color: #6b7280; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>Steam Page Check</h1>
+      <div class="accent"></div>
+      <p>Preflight your Steam store page against common review expectations before submission. Advisory only — not affiliated with Valve.</p>
+    </div>
+
+    <label>Steam Store URL (public page)</label>
+    <input id="steamUrl" type="text" placeholder="https://store.steampowered.com/app/123456">
+
+    <label>Or paste your store page text</label>
+    <textarea id="steamText" placeholder="Paste About This Game, Early Access notes, pricing info, etc."></textarea>
+
+    <div class="buttons">
+      <button onclick="runCheck()">Run Check</button>
+      <button class="secondary" onclick="copyResults()">Copy Results</button>
+      <button class="ghost" onclick="loadSample()">Load Test Example</button>
+      <button class="ghost" onclick="toggleDarkMode()">Toggle Light/Dark</button>
+      <button class="secondary" onclick="shareReport()">Share Report (coming soon)</button>
+    </div>
+
+    <div class="summary-bar" id="summaryBar"></div>
+
+    <h2>Results</h2>
+    <div id="output">No checks run yet.</div>
+
+    <footer>steampagecheck.com · Not affiliated with Valve or Steam</footer>
+  </div>
+
+  <script>
+    let darkMode = true; // default dark mode
+
+    async function runCheck() {
+      const url = document.getElementById("steamUrl").value.trim();
+      const text = document.getElementById("steamText").value.trim();
+      const output = document.getElementById("output");
+      const summaryBar = document.getElementById("summaryBar");
+
+      output.innerHTML = "Checking…";
+      summaryBar.innerHTML = "";
+
+      let payload;
+      if (text) payload = { input_data: text, input_type: "text" };
+      else if (url) payload = { input_data: url, input_type: "url" };
+      else { output.innerHTML = "Please enter a URL or paste text."; return; }
+
+      try {
+        const res = await fetch("https://steampagecheck-backend.onrender.com/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+
+        const data = await res.json();
+        output.innerHTML = "";
+
+        // build summary
+        const counts = data.severity_counts;
+        if (counts.pass) summaryBar.innerHTML += `<span class="summary-pass">✅ Pass: ${counts.pass}</span>`;
+        if (counts.warning) summaryBar.innerHTML += `<span class="summary-warning">⚠️ Warning: ${counts.warning}</span>`;
+        if (counts.fail) summaryBar.innerHTML += `<span class="summary-fail">❌ Fail: ${counts.fail}</span>`;
+
+        data.results.forEach(r => {
+          const div = document.createElement("div");
+          div.className = `result ${r.severity}`;
+          let suggested = r.suggested_fix ? `<div class="suggested-fix">${r.suggested_fix}</div>` : "";
+          let toggle = r.suggested_fix ? `<span class="toggle-fix" onclick="this.nextElementSibling.style.display=(this.nextElementSibling.style.display==='none'?'block':'none')">Show Fix</span>` : "";
+          div.innerHTML = `
+            <strong>${r.severity.toUpperCase()} — ${r.title}</strong>
+            ${r.details || "No issues detected."}
+            ${toggle}
+            ${suggested}
+          `;
+          output.appendChild(div);
+        });
+      } catch {
+        output.innerHTML = "Server error. Make sure the API is running.";
+      }
+    }
+
+    function copyResults() {
+      navigator.clipboard.writeText(document.getElementById("output").innerText);
+      alert("Results copied to clipboard.");
+    }
+
+    function loadSample() {
+      document.getElementById("steamText").value = `
+Early Access multiplayer game.
+Online features included.
+Premium currency available.
+Screenshots may be updated later.
+      `;
+      document.getElementById("steamUrl").value = "";
+    }
+
+    function toggleDarkMode() {
+      darkMode = !darkMode;
+      document.body.classList.toggle("light", !darkMode);
+    }
+
+    function shareReport() {
+      alert("Shareable reports will be added in a future version!");
+    }
+  </script>
+</body>
+</html>
