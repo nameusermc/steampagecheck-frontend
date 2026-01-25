@@ -26,18 +26,20 @@
       <button class="secondary" onclick="copyResults()">Copy Results</button>
       <button class="ghost" onclick="loadSample()">Load Test Example</button>
       <button class="ghost" onclick="toggleDarkMode()">Toggle Light/Dark</button>
-      <button class="secondary" id="unlockButton" onclick="buyFullAccess()">Unlock All Checks</button>
+      <button class="secondary" onclick="unlockAllChecks()">Unlock All Checks</button>
     </div>
 
     <div class="summary-bar" id="summaryBar"></div>
 
     <h2>Results</h2>
+    <div id="output">No checks run yet.</div>
+
+    <h2>Check Access</h2>
     <div id="results-container"></div>
 
     <footer>steampagecheck.com · Not affiliated with Valve or Steam</footer>
   </div>
 
-  <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
