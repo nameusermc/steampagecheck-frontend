@@ -74,7 +74,7 @@ function renderChecks() {
 
   const visibleChecks = hasPaid ? checks : checks.slice(0, FREE_LIMIT);
 
-  visibleChecks.forEach((check, index) => {
+  visibleChecks.forEach((check) => {
     const card = document.createElement("div");
     card.className = "check-card";
 
