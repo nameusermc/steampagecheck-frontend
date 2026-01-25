@@ -41,8 +41,31 @@
   </div>
 
   
-<!-- Paddle Sandbox JS -->
-  <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
-  <script src="main.js"></script>
+<!-- Paddle Sandbox JS - MUST LOAD FIRST -->
+<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+
+<!-- Inline initialization script -->
+<script>
+  // Must happen BEFORE main.js
+  Paddle.Environment.set('sandbox');
+  Paddle.Initialize({
+    token: 'test_c2deb3cb9b85f4b2afcd596c107',
+    eventCallback: function(data) {
+      console.log('PADDLE EVENT:', data.name, data);
+      if (data.name === 'checkout.completed') {
+        console.log('Payment completed! Unlocking...');
+        localStorage.setItem('unlocked', 'true');
+        setTimeout(() => {
+          Paddle.Checkout.close();
+          renderChecks(); // or displayFiles() depending on app
+        }, 1000);
+      }
+    }
+  });
+</script>
+
+<!-- Your app JS -->
+<script src="main.js"></script>
+
 </body>
 </html>
