@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <title>Steam Page Check</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -40,70 +40,55 @@
     <footer>steampagecheck.com · Not affiliated with Valve or Steam</footer>
   </div>
 
-  <!-- Paddle Sandbox JS MUST LOAD FIRST -->
+  <!-- Paddle JS - Load FIRST -->
   <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
 
-  <!-- Paddle Initialization -->
+  <!-- Paddle Sandbox Unlock Logic -->
   <script>
     const PADDLE_CLIENT_TOKEN = 'test_c2deb3cb9b85f4b2afcd596c107';
     const PADDLE_PRICE_ID = 'pri_01kfc8wsrhhqezk6htxdy7eppe';
 
-    // Track unlock state
+    // Unlock state
     let hasPaid = localStorage.getItem('unlocked') === 'true';
-
     function setUnlocked(state) {
       hasPaid = state;
       if (state) localStorage.setItem('unlocked', 'true');
       else localStorage.removeItem('unlocked');
     }
 
-    function initPaddle() {
-      if (typeof Paddle === 'undefined') {
-        console.error('Paddle SDK not loaded');
-        return;
-      }
-
-      try {
-        // CRITICAL: Set sandbox environment BEFORE initialization
-        Paddle.Environment.set('sandbox');
-
-        Paddle.Initialize({
-          token: PADDLE_CLIENT_TOKEN,
-          eventCallback: function(data) {
-            console.log('PADDLE EVENT:', data.name, data);
-            if (data.name === 'checkout.completed') {
-              console.log('Payment completed! Unlocking...');
-              setUnlocked(true);
-              setTimeout(() => {
-                Paddle.Checkout.close();
-                // Refresh check cards or UI after unlock
-                if (typeof renderChecks === 'function') renderChecks();
-              }, 1000);
-            }
-          }
-        });
-
-        console.log('Paddle initialized successfully in sandbox mode');
-      } catch (err) {
-        console.error('Paddle initialization failed:', err);
-      }
+    // Set Sandbox environment immediately
+    if (typeof Paddle !== 'undefined') {
+      Paddle.Environment.set('sandbox');
+      console.log('Paddle sandbox environment set');
+    } else {
+      console.error('Paddle SDK not loaded');
     }
 
+    // Unlock button logic
     document.addEventListener('DOMContentLoaded', () => {
-      // Initialize Paddle BEFORE any checkout buttons are called
-      initPaddle();
-
-      // Hook up the unlock button
       const unlockBtn = document.getElementById('unlockBtn');
       unlockBtn.addEventListener('click', () => {
         Paddle.Checkout.open({
-          items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
+          items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }],
+          successCallback: function() {
+            console.log('Payment completed! Unlocking...');
+            setUnlocked(true);
+
+            // Refresh UI or enable features after unlock
+            if (typeof renderChecks === 'function') renderChecks();
+          },
+          closeCallback: function() {
+            console.log('Checkout closed.');
+          },
+          loadCallback: function() {
+            console.log('Checkout loaded.');
+          }
         });
       });
     });
   </script>
 
-  <!-- Main application JS -->
+  <!-- Your app JS -->
   <script src="main.js"></script>
 </body>
 </html>
