@@ -85,13 +85,9 @@
     // ================================================
     // PADDLE BILLING CONFIGURATION
     // ================================================
-    // SANDBOX CREDENTIALS (for testing)
-    var PADDLE_CLIENT_TOKEN = 'test_86bf96ddbab105199d721ee81ae';
-    var PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
-    
-    // PRODUCTION CREDENTIALS (uncomment when going live)
-    // var PADDLE_CLIENT_TOKEN = 'YOUR_LIVE_TOKEN_HERE';
-    // var PADDLE_PRICE_ID = 'YOUR_LIVE_PRICE_ID_HERE';
+    // PRODUCTION CREDENTIALS
+    var PADDLE_CLIENT_TOKEN = 'live_2f1290ddf0609ffc67fcc46679b';
+    var PADDLE_PRICE_ID = 'pri_01kha1wwca2bx2dd1baftfscq7';
     
     var paddleReady = false;
 
@@ -147,10 +143,7 @@
       }
 
       try {
-        // SANDBOX MODE - Remove this line for production
-        Paddle.Environment.set('sandbox');
-        console.log('[Paddle] Environment set to sandbox');
-        
+        // Production mode - no environment override needed
         Paddle.Initialize({
           token: PADDLE_CLIENT_TOKEN,
           eventCallback: function(event) {
