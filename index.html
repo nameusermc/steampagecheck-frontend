@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Steam Page Check</title>
+  <title>Steam Page Check - Preflight Your Store Page</title>
+  <meta name="description" content="Free tool for indie developers to check their Steam store page for common issues before submission. Catch problems that cause rejections.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,39 +14,43 @@
     <div class="header">
       <h1>Steam Page Check</h1>
       <div class="accent"></div>
-      <p>Preflight your Steam store page against common review expectations before submission. Advisory only — not affiliated with Valve.</p>
+      <p>Preflight your Steam store page against common review issues before submission. Catch the problems that cause rejections and delays. Advisory only — not affiliated with Valve.</p>
     </div>
 
-    <label for="steamUrl">Steam Store URL (public page)</label>
+    <label for="steamUrl">Steam Store URL (for reference only)</label>
     <input id="steamUrl" type="text" placeholder="https://store.steampowered.com/app/123456">
 
-    <label for="steamText">Or paste your store page text</label>
-    <textarea id="steamText" placeholder="Paste About This Game, Early Access notes, pricing info, etc."></textarea>
+    <label for="steamText">Paste your store page text here *</label>
+    <textarea id="steamText" placeholder="Paste your About This Game section, Early Access notes, System Requirements, and other store page text from Steamworks. We analyze the text to catch common issues."></textarea>
 
     <div class="buttons">
       <button onclick="runCheck()">Run Check</button>
       <button class="secondary" onclick="copyResults()">Copy Results</button>
-      <button class="ghost" onclick="loadSample()">Load Test Example</button>
-      <button class="ghost" onclick="toggleTheme()">Toggle Light/Dark</button>
-      <button class="secondary" id="unlockBtn" onclick="openCheckout()">🔓 Unlock All Checks</button>
+      <button class="ghost" onclick="loadSample()">Load Sample</button>
+      <button class="ghost" onclick="toggleTheme()">Toggle Theme</button>
+      <button class="secondary" id="unlockBtn" onclick="openCheckout()">🔓 Unlock All 10 Checks</button>
     </div>
 
     <div class="summary-bar" id="summaryBar"></div>
 
     <h2>Results</h2>
-    <div id="output">No checks run yet.</div>
+    <div id="output">
+      <p class="placeholder-text">Paste your Steam store page content above and click <strong>Run Check</strong> to analyze it for common issues.</p>
+      <p class="placeholder-text"><em>Tip: Copy text from your Steamworks store page editor — your page isn't public until approved, so paste the text directly.</em></p>
+    </div>
 
     <div class="unlock-banner" id="unlockBanner">
       <span class="unlock-icon">🔒</span>
       <div class="unlock-text">
-        <strong>Premium checks are locked</strong>
-        <span>Unlock all 8 checks for a one-time payment</span>
+        <strong>7 Premium Checks Locked</strong>
+        <span>Unlock all 10 checks including System Requirements, Mature Content, Multiplayer, External Links, Support Info, Languages, and Legal/Copyright</span>
       </div>
       <button onclick="openCheckout()">Unlock Now</button>
     </div>
 
     <footer>
-      <p>Steam Page Check — Built for indie developers. Not affiliated with Valve Corporation.</p>
+      <p>Steam Page Check — Built for indie developers. Checks based on common Steam store page rejection reasons.</p>
+      <p class="disclaimer">Not affiliated with Valve Corporation. This tool provides advisory guidance only and does not guarantee Steam approval.</p>
     </footer>
 
   </div>
@@ -57,12 +62,22 @@
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
   <script>
-    // Paddle Configuration
+    // ================================================
+    // PADDLE BILLING CONFIGURATION
+    // ================================================
+    // SANDBOX CREDENTIALS (for testing)
     var PADDLE_CLIENT_TOKEN = 'test_86bf96ddbab105199d721ee81ae';
     var PADDLE_PRICE_ID = 'pri_01kft4eh4rcjcx5pq2tvhwsw27';
+    
+    // PRODUCTION CREDENTIALS (uncomment when going live)
+    // var PADDLE_CLIENT_TOKEN = 'YOUR_LIVE_TOKEN_HERE';
+    // var PADDLE_PRICE_ID = 'YOUR_LIVE_PRICE_ID_HERE';
+    
     var paddleReady = false;
 
     function openCheckout() {
+      console.log('[Paddle] openCheckout() called');
+      
       if (!paddleReady) {
         alert('Payment system is loading. Please wait a moment and try again.');
         return;
@@ -72,18 +87,22 @@
         Paddle.Checkout.open({
           items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
         });
+        console.log('[Paddle] Checkout opened');
       } catch (e) {
-        console.error('Checkout error:', e);
-        alert('Unable to open checkout. Please refresh and try again.');
+        console.error('[Paddle] Checkout error:', e);
+        alert('Unable to open checkout. Please refresh the page and try again.');
       }
     }
 
     function onPaddleSuccess() {
+      console.log('[Paddle] Payment successful - unlocking');
       localStorage.setItem('steamcheck_unlocked', 'true');
       updateUnlockUI();
+      
+      // Show success in results area
       var output = document.getElementById('output');
       if (output) {
-        output.innerHTML = '<div class="result pass"><strong>✓ Premium Unlocked!</strong> All checks are now available. Run a check to see the full results.</div>';
+        output.innerHTML = '<div class="result pass"><strong>✓ Premium Unlocked!</strong><p>All 10 checks are now available. Paste your store page content and click Run Check to see the full analysis.</p></div>';
       }
     }
 
@@ -94,37 +113,57 @@
       
       if (btn) btn.style.display = unlocked ? 'none' : 'inline-block';
       if (banner) banner.style.display = unlocked ? 'none' : 'flex';
+      
+      console.log('[UI] Unlock state:', unlocked ? 'UNLOCKED' : 'LOCKED');
     }
 
     function initPaddle() {
+      console.log('[Paddle] Initializing...');
+      
       if (typeof Paddle === 'undefined') {
-        console.log('Paddle SDK not available');
+        console.log('[Paddle] SDK not loaded yet, retrying...');
+        setTimeout(initPaddle, 500);
         return;
       }
 
       try {
+        // SANDBOX MODE - Remove this line for production
         Paddle.Environment.set('sandbox');
+        console.log('[Paddle] Environment set to sandbox');
+        
         Paddle.Initialize({
           token: PADDLE_CLIENT_TOKEN,
           eventCallback: function(event) {
-            console.log('Paddle event:', event.name);
+            console.log('[Paddle] Event:', event.name);
+            
             if (event.name === 'checkout.completed') {
               onPaddleSuccess();
             }
           }
         });
+        
         paddleReady = true;
-        console.log('Paddle initialized');
+        console.log('[Paddle] Initialized successfully');
       } catch (e) {
-        console.error('Paddle init error:', e);
+        console.error('[Paddle] Init error:', e);
       }
     }
 
-    // Run on load
+    // ================================================
+    // INITIALIZATION
+    // ================================================
+    
+    // Update UI based on unlock state
     updateUnlockUI();
     
-    // Init Paddle after a short delay to ensure SDK is loaded
-    setTimeout(initPaddle, 500);
+    // Initialize Paddle after SDK loads
+    if (document.readyState === 'complete') {
+      setTimeout(initPaddle, 300);
+    } else {
+      window.addEventListener('load', function() {
+        setTimeout(initPaddle, 300);
+      });
+    }
   </script>
 </body>
 </html>

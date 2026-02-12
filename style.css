@@ -124,7 +124,7 @@ body.light input:focus, body.light textarea:focus {
 
 textarea { 
   resize: vertical; 
-  min-height: 120px; 
+  min-height: 150px; 
   line-height: 1.5;
 }
 
@@ -246,12 +246,30 @@ body.light h2 {
 }
 
 /* ========================
-   RESULTS CARDS
+   RESULTS OUTPUT
    ======================== */
 #output {
-  min-height: 60px;
+  min-height: 80px;
 }
 
+.placeholder-text {
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 8px 0;
+}
+
+body.light .placeholder-text {
+  color: #6b7280;
+}
+
+.placeholder-text em {
+  opacity: 0.8;
+}
+
+/* ========================
+   RESULTS CARDS
+   ======================== */
 .result {
   border-radius: 8px;
   padding: 16px;
@@ -270,6 +288,12 @@ body.light h2 {
   display: block;
   margin-bottom: 6px;
   font-size: 15px;
+}
+
+.result p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 /* Pass state */
@@ -335,6 +359,8 @@ body.light .result.locked strong {
 
 .locked-message {
   font-style: italic;
+  display: block;
+  margin-top: 4px;
 }
 
 /* ========================
@@ -378,6 +404,8 @@ body.light .unlock-text strong {
 .unlock-text span {
   font-size: 14px;
   color: #a0b3c0;
+  line-height: 1.4;
+  display: block;
 }
 
 body.light .unlock-text span {
@@ -406,7 +434,16 @@ body.light footer {
 }
 
 footer p {
-  margin: 0;
+  margin: 0 0 8px 0;
+}
+
+footer p:last-child {
+  margin-bottom: 0;
+}
+
+footer .disclaimer {
+  font-size: 11px;
+  opacity: 0.8;
 }
 
 /* ========================
