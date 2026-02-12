@@ -615,20 +615,12 @@ function isUnlocked() {
 // RUN CHECK - called by onclick
 // =========================================
 function runCheck() {
-  var url = document.getElementById('steamUrl').value.trim();
   var text = document.getElementById('steamText').value.trim();
   var output = document.getElementById('output');
   var summaryBar = document.getElementById('summaryBar');
 
-  if (!url && !text) {
+  if (!text) {
     output.innerHTML = '<div class="result warning"><strong>⚠ Input Required</strong><br>Paste your Steam store page text (About This Game, System Requirements, etc.) into the text area above, then click Run Check.</div>';
-    summaryBar.innerHTML = '';
-    return;
-  }
-
-  // If only URL provided, show helpful message
-  if (url && !text) {
-    output.innerHTML = '<div class="result warning"><strong>⚠ Paste Your Content</strong><br>This tool analyzes text you paste from Steamworks. Copy your About This Game section, System Requirements, and other store page text, then paste it in the text area above.<br><br><em>Tip: Your Steam page isn\'t public until after approval, so paste the text directly from Steamworks.</em></div>';
     summaryBar.innerHTML = '';
     return;
   }
@@ -740,7 +732,6 @@ function loadSample() {
   sample += '© 2025 Pixel Quest Studios. All rights reserved.';
   
   document.getElementById('steamText').value = sample;
-  document.getElementById('steamUrl').value = '';
   runCheck();
 }
 
