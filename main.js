@@ -752,3 +752,100 @@ function toggleTheme() {
     document.body.classList.add('light');
   }
 })();
+
+// =========================================
+// RESTORE PURCHASE FUNCTIONS
+// =========================================
+function showRestoreModal() {
+  var modal = document.getElementById('restoreModal');
+  var emailInput = document.getElementById('restoreEmail');
+  var status = document.getElementById('restoreStatus');
+  
+  if (modal) {
+    modal.classList.add('active');
+    if (emailInput) emailInput.value = '';
+    if (status) status.textContent = '';
+  }
+}
+
+function hideRestoreModal() {
+  var modal = document.getElementById('restoreModal');
+  if (modal) {
+    modal.classList.remove('active');
+  }
+}
+
+function verifyPurchase() {
+  var emailInput = document.getElementById('restoreEmail');
+  var status = document.getElementById('restoreStatus');
+  var email = emailInput ? emailInput.value.trim() : '';
+  
+  if (!email) {
+    if (status) {
+      status.textContent = 'Please enter your email address.';
+      status.className = 'modal-status error';
+    }
+    return;
+  }
+  
+  // Basic email validation
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (status) {
+      status.textContent = 'Please enter a valid email address.';
+      status.className = 'modal-status error';
+    }
+    return;
+  }
+  
+  if (status) {
+    status.textContent = 'Verifying...';
+    status.className = 'modal-status';
+  }
+  
+  // Call the serverless function
+  fetch('/api/verify-purchase', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email: email })
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    if (data.success) {
+      // Purchase verified - unlock!
+      localStorage.setItem('steamcheck_unlocked', 'true');
+      if (status) {
+        status.textContent = 'Purchase verified! Unlocking...';
+        status.className = 'modal-status success';
+      }
+      
+      // Close modal and update UI after a moment
+      setTimeout(function() {
+        hideRestoreModal();
+        updateUnlockUI();
+        
+        // Show success message in results area
+        var output = document.getElementById('output');
+        if (output) {
+          output.innerHTML = '<div class="result pass"><strong>✓ Purchase Restored!</strong><p>All 10 checks are now unlocked. Paste your store page content and click Run Check.</p></div>';
+        }
+      }, 1500);
+    } else {
+      // No purchase found
+      if (status) {
+        status.textContent = data.error || 'No purchase found for this email.';
+        status.className = 'modal-status error';
+      }
+    }
+  })
+  .catch(function(error) {
+    console.error('Restore error:', error);
+    if (status) {
+      status.textContent = 'Unable to verify. Please try again later.';
+      status.className = 'modal-status error';
+    }
+  });
+}

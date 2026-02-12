@@ -412,8 +412,104 @@ body.light .unlock-text span {
   color: #475569;
 }
 
-.unlock-banner button {
+.unlock-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.unlock-buttons button {
   white-space: nowrap;
+}
+
+.unlock-buttons button.ghost {
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+/* ========================
+   MODAL
+   ======================== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: #0d1b2a;
+  border: 1px solid #3a475a;
+  border-radius: 12px;
+  padding: 28px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+body.light .modal {
+  background: #ffffff;
+  border-color: #d1d5db;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+.modal h3 {
+  margin: 0 0 12px 0;
+  color: #f9fafb;
+  font-size: 20px;
+}
+
+body.light .modal h3 {
+  color: #111827;
+}
+
+.modal p {
+  margin: 0 0 16px 0;
+  color: #a0b3c0;
+  font-size: 14px;
+}
+
+body.light .modal p {
+  color: #6b7280;
+}
+
+.modal input[type="email"] {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.modal-buttons button {
+  flex: 1;
+}
+
+.modal-status {
+  margin-top: 16px;
+  margin-bottom: 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.modal-status.success {
+  color: #10b981;
+}
+
+.modal-status.error {
+  color: #ef4444;
 }
 
 /* ========================
@@ -489,7 +585,20 @@ footer .disclaimer {
     text-align: center;
   }
 
-  .unlock-banner button {
+  .unlock-buttons {
     width: 100%;
+  }
+
+  .unlock-buttons button {
+    width: 100%;
+  }
+
+  .modal {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
   }
 }

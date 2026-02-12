@@ -42,7 +42,24 @@
         <strong>7 Premium Checks Locked</strong>
         <span>Unlock all 10 checks including System Requirements, Mature Content, Multiplayer, External Links, Support Info, Languages, and Legal/Copyright</span>
       </div>
-      <button onclick="openCheckout()">Unlock Now</button>
+      <div class="unlock-buttons">
+        <button onclick="openCheckout()">Unlock Now - $9.99</button>
+        <button class="ghost" onclick="showRestoreModal()">Restore Purchase</button>
+      </div>
+    </div>
+
+    <!-- Restore Purchase Modal -->
+    <div class="modal-overlay" id="restoreModal">
+      <div class="modal">
+        <h3>Restore Purchase</h3>
+        <p>Enter the email you used when purchasing to restore your unlock.</p>
+        <input type="email" id="restoreEmail" placeholder="your@email.com">
+        <div class="modal-buttons">
+          <button onclick="verifyPurchase()">Verify</button>
+          <button class="ghost" onclick="hideRestoreModal()">Cancel</button>
+        </div>
+        <p class="modal-status" id="restoreStatus"></p>
+      </div>
     </div>
 
     <footer>
