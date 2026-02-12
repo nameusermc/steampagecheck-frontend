@@ -441,6 +441,23 @@ footer p:last-child {
   margin-bottom: 0;
 }
 
+footer .footer-links {
+  margin: 12px 0;
+}
+
+footer .footer-links a {
+  color: #66c0f4;
+  text-decoration: none;
+}
+
+footer .footer-links a:hover {
+  text-decoration: underline;
+}
+
+body.light footer .footer-links a {
+  color: #0ea5e9;
+}
+
 footer .disclaimer {
   font-size: 11px;
   opacity: 0.8;
