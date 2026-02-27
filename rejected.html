@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Steam Pages Get Rejected — Common Reasons & How to Fix Them (2026)</title>
+  <meta name="description" content="Your Steam store page was rejected? Here are the most common rejection reasons and exactly how to fix them. Updated for 2026.">
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  
+  <meta property="og:title" content="Why Steam Pages Get Rejected — Common Reasons (2026)">
+  <meta property="og:description" content="Common Steam store page rejection reasons and how to fix them.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://steampagecheck.com/rejected.html">
+  <meta property="og:image" content="https://steampagecheck.com/og-image.png">
+  
+  <link rel="canonical" href="https://steampagecheck.com/rejected.html">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1b2838;
+      color: #c7d5e0;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #8f98a0;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      color: #66c0f4;
+      margin: 48px 0 16px;
+      padding-top: 24px;
+      border-top: 1px solid #2a3f5f;
+    }
+    h2:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+    h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 28px 0 12px;
+    }
+    p { margin-bottom: 16px; }
+    ul, ol {
+      margin: 16px 0 24px 24px;
+    }
+    li { margin-bottom: 10px; }
+    a { color: #66c0f4; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .reason-card {
+      background: #0d1b2a;
+      border-left: 4px solid #f87171;
+      padding: 20px 24px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .reason-card h3 {
+      color: #f87171;
+      margin: 0 0 12px 0;
+    }
+    .reason-card p {
+      margin-bottom: 12px;
+      color: #a0b3c0;
+    }
+    .reason-card .fix {
+      background: #1a2e2a;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-top: 12px;
+    }
+    .reason-card .fix strong {
+      color: #4ade80;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
+      border: 1px solid #66c0f4;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 40px 0;
+      text-align: center;
+    }
+    .cta-box h3 {
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .cta-box p {
+      margin-bottom: 16px;
+      color: #a0b3c0;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #66c0f4;
+      color: #1b2838;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .cta-btn:hover { background: #4fa3d7; text-decoration: none; }
+    .toc {
+      background: #0d1b2a;
+      padding: 20px 24px;
+      border-radius: 8px;
+      margin: 24px 0 40px;
+    }
+    .toc h3 {
+      color: #66c0f4;
+      margin: 0 0 12px 0;
+      font-size: 1rem;
+    }
+    .toc ul {
+      margin: 0;
+      list-style: none;
+      padding-left: 0;
+    }
+    .toc li {
+      margin-bottom: 8px;
+    }
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid #2a3f5f;
+      text-align: center;
+      color: #8f98a0;
+      font-size: 0.9rem;
+    }
+    .footer-links { margin-bottom: 16px; }
+    .footer-links a { margin: 0 12px; }
+  </style>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Why Steam Pages Get Rejected — Common Reasons & How to Fix Them",
+    "description": "Common Steam store page rejection reasons and how to fix them.",
+    "author": { "@type": "Organization", "name": "Steam Page Check" },
+    "publisher": { "@type": "Organization", "name": "Steam Page Check" }
+  }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Why Steam Pages Get Rejected</h1>
+    <p class="subtitle">Common rejection reasons based on developer reports and Steamworks documentation — and how to fix each one.</p>
+    
+    <div class="toc">
+      <h3>Jump to Section</h3>
+      <ul>
+        <li><a href="#content">Content & Description Issues</a></li>
+        <li><a href="#assets">Image & Video Problems</a></li>
+        <li><a href="#early-access">Early Access Disclosures</a></li>
+        <li><a href="#technical">Technical Requirements</a></li>
+        <li><a href="#legal">Legal & Policy Violations</a></li>
+        <li><a href="#timing">Timing & Process Issues</a></li>
+      </ul>
+    </div>
+    
+    <h2 id="content">Content & Description Issues</h2>
+    
+    <div class="reason-card">
+      <h3>Placeholder Text</h3>
+      <p>Descriptions containing "coming soon", "TBD", "to be announced", or incomplete sections.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Replace all placeholder text with actual content. If features aren't finalized, describe what's confirmed.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Description Too Short</h3>
+      <p>The "About This Game" section lacks sufficient detail about gameplay, features, or content.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Aim for 300+ words minimum. Describe what players actually do, list key features, mention content scope.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Misleading Description</h3>
+      <p>Claims about features, content, or gameplay that don't match the actual build.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Only describe features that are implemented and working. Mark planned features clearly as "planned" or remove them.
+      </div>
+    </div>
+    
+    <h2 id="assets">Image & Video Problems</h2>
+    
+    <div class="reason-card">
+      <h3>Non-Gameplay Screenshots</h3>
+      <p>Screenshots showing concept art, pre-rendered cinematics, or marketing materials instead of actual gameplay.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Use only actual in-game screenshots. Concept art can go in the description, not the screenshot gallery.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Capsule Image Missing Title</h3>
+      <p>The main capsule image doesn't include a readable game title or logo.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Ensure your game's name is clearly visible and legible on all capsule images.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Wrong Image Dimensions</h3>
+      <p>Capsule images, screenshots, or headers don't match required dimensions.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Check <a href="capsule-images.html">capsule image requirements</a> for exact dimensions.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Marketing Text in Screenshots</h3>
+      <p>Screenshots containing awards, review quotes, or promotional copy.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Screenshots should show gameplay only. Marketing materials go elsewhere.
+      </div>
+    </div>
+    
+    <h2 id="early-access">Early Access Disclosures</h2>
+    
+    <div class="reason-card">
+      <h3>Missing Early Access Disclosures</h3>
+      <p>Early Access games without answers to the five required disclosure questions.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Answer all five questions: Why EA? Current state? Timeline? Pricing changes? Community involvement? See <a href="checks/early-access.html">Early Access requirements</a>.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Vague Timeline</h3>
+      <p>Early Access timeline says "when it's ready" instead of an estimate.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Provide a realistic estimate like "6-12 months" or "approximately 1 year."
+      </div>
+    </div>
+    
+    <h2 id="technical">Technical Requirements</h2>
+    
+    <div class="reason-card">
+      <h3>Missing System Requirements</h3>
+      <p>System requirements section incomplete or using placeholder values.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Fill in all five required fields: OS, Processor, Memory, Graphics, Storage. Use specific values.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Build Doesn't Match Store Page</h3>
+      <p>Features listed on store page aren't implemented in the submitted build.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Only list features that work in your current build. Remove or clearly mark planned features.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Game Doesn't Launch</h3>
+      <p>The submitted build crashes or fails to start on supported operating systems.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Test on clean machines for all supported OS versions before submission.
+      </div>
+    </div>
+    
+    <h2 id="legal">Legal & Policy Violations</h2>
+    
+    <div class="reason-card">
+      <h3>Links to Competing Storefronts</h3>
+      <p>Store page contains links to Epic, GOG, itch.io, or other competing stores.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Remove all links to competing storefronts. Social media and Discord are generally fine.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Trademark Issues</h3>
+      <p>Using other companies' trademarks inappropriately, or making unfair comparisons.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Use genre terms ("souls-like") instead of trademarked names. See <a href="checks/legal.html">legal guidelines</a>.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Undisclosed Mature Content</h3>
+      <p>Game contains violence, nudity, or other mature content not flagged in the content survey.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Complete the mature content questionnaire honestly. Under-reporting causes problems.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Broken External Links</h3>
+      <p>Discord invite links expired, or website URLs not working.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Use permanent Discord invites. Test all links before submission.
+      </div>
+    </div>
+    
+    <h2 id="timing">Timing & Process Issues</h2>
+    
+    <div class="reason-card">
+      <h3>Store Page Submitted Before Build</h3>
+      <p>For adult content games, both store page and build must be submitted together.</p>
+      <div class="fix">
+        <strong>Fix:</strong> For adult content, prepare both store page and playable build before submitting for review.
+      </div>
+    </div>
+    
+    <div class="reason-card">
+      <h3>Insufficient Coming Soon Period</h3>
+      <p>Trying to release without the required 2-week Coming Soon period.</p>
+      <div class="fix">
+        <strong>Fix:</strong> Plan for at least 2 weeks in Coming Soon state before release. Use this time to build wishlists.
+      </div>
+    </div>
+    
+    <div class="cta-box">
+      <h3>Catch Issues Before Submission</h3>
+      <p>Don't wait for Valve's feedback. Check your page now.</p>
+      <a href="index.html" class="cta-btn">Run Free Check →</a>
+    </div>
+    
+    <h2>What Happens After Rejection?</h2>
+    <p>When Valve rejects your store page, you'll receive feedback explaining what needs to change. Common next steps:</p>
+    <ol>
+      <li>Read the feedback carefully — it usually points to specific issues</li>
+      <li>Make the requested changes</li>
+      <li>Re-submit for review</li>
+      <li>Each re-submission goes back into the queue (typically 3-5 business days)</li>
+    </ol>
+    <p>Multiple rejections can delay your launch significantly, which is why catching issues before submission matters.</p>
+    
+    <h2>Related Resources</h2>
+    <ul>
+      <li><a href="guide.html">Complete Steam Store Page Checklist</a></li>
+      <li><a href="capsule-images.html">Capsule Image Requirements</a></li>
+      <li><a href="coming-soon.html">Coming Soon Page Guide</a></li>
+      <li><a href="checks/">All Compliance Checks</a></li>
+    </ul>
+    
+    <footer>
+      <p class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="faq.html">FAQ</a>
+        <a href="pricing.html">Pricing</a>
+      </p>
+      <p>Steam Page Check — Not affiliated with Valve Corporation.</p>
+    </footer>
+  </div>
+</body>
+</html>

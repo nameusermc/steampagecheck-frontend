@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam Demo Guide — How to Set Up a Demo for Wishlists (2026)</title>
+  <meta name="description" content="How to create and optimize your Steam demo. Setup process, Next Fest strategy, and best practices for converting demo players to wishlists.">
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  
+  <meta property="og:title" content="Steam Demo Guide 2026">
+  <meta property="og:description" content="How to set up a demo and convert players to wishlists.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://steampagecheck.com/demo.html">
+  <meta property="og:image" content="https://steampagecheck.com/og-image.png">
+  
+  <link rel="canonical" href="https://steampagecheck.com/demo.html">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1b2838;
+      color: #c7d5e0;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #8f98a0;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      color: #66c0f4;
+      margin: 48px 0 16px;
+    }
+    h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 28px 0 12px;
+    }
+    p { margin-bottom: 16px; }
+    ul, ol {
+      margin: 16px 0 24px 24px;
+    }
+    li { margin-bottom: 10px; }
+    a { color: #66c0f4; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .highlight-box {
+      background: #0d1b2a;
+      border-left: 4px solid #66c0f4;
+      padding: 20px 24px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .highlight-box p { margin-bottom: 0; color: #a0b3c0; }
+    .tip-box {
+      background: #1a2e2a;
+      border-left: 4px solid #4ade80;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .tip-box p { margin-bottom: 0; color: #a7f3d0; }
+    .warning-box {
+      background: #2d1f1f;
+      border-left: 4px solid #f87171;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .warning-box p { margin-bottom: 0; color: #fca5a5; }
+    .step-card {
+      background: #0d1b2a;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .step-card h3 {
+      color: #66c0f4;
+      margin: 0 0 12px 0;
+    }
+    .step-card ol {
+      margin-bottom: 0;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 24px 0;
+    }
+    @media (max-width: 600px) {
+      .stat-grid { grid-template-columns: 1fr; }
+    }
+    .stat-box {
+      background: #0d1b2a;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-box .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #66c0f4;
+      line-height: 1;
+    }
+    .stat-box .label {
+      color: #8f98a0;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
+      border: 1px solid #66c0f4;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 40px 0;
+      text-align: center;
+    }
+    .cta-box h3 {
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .cta-box p {
+      margin-bottom: 16px;
+      color: #a0b3c0;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #66c0f4;
+      color: #1b2838;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .cta-btn:hover { background: #4fa3d7; text-decoration: none; }
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid #2a3f5f;
+      text-align: center;
+      color: #8f98a0;
+      font-size: 0.9rem;
+    }
+    .footer-links { margin-bottom: 16px; }
+    .footer-links a { margin: 0 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Steam Demo Guide</h1>
+    <p class="subtitle">How to create a compelling demo that converts players into wishlists and builds momentum for launch.</p>
+    
+    <h2>Why Release a Demo?</h2>
+    
+    <div class="highlight-box">
+      <p>Demos are one of the most effective wishlist-building tools available. Events like Steam Next Fest generate massive visibility, and players who try your demo are significantly more likely to wishlist and purchase.</p>
+    </div>
+    
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="number">2-3x</div>
+        <div class="label">Higher conversion from demo players</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">1000+</div>
+        <div class="label">Wishlists possible per Next Fest</div>
+      </div>
+      <div class="stat-box">
+        <div class="number">Free</div>
+        <div class="label">Marketing exposure</div>
+      </div>
+    </div>
+    
+    <h2>Setting Up Your Demo</h2>
+    
+    <div class="step-card">
+      <h3>Technical Setup</h3>
+      <ol>
+        <li>In Steamworks, go to your app → Associated Packages & DLC</li>
+        <li>Click "Create New Demo"</li>
+        <li>This creates a separate App ID for your demo</li>
+        <li>Upload your demo build to the demo App ID</li>
+        <li>The demo automatically links to your main game's store page</li>
+      </ol>
+    </div>
+    
+    <h3>Demo Store Page</h3>
+    <p>Your demo gets its own mini store page, but it's primarily accessed through your main game's page via a "Download Demo" button. You can customize:</p>
+    <ul>
+      <li>Demo-specific screenshots (optional)</li>
+      <li>Demo description</li>
+      <li>System requirements (if different from full game)</li>
+    </ul>
+    
+    <h2>What to Include in Your Demo</h2>
+    
+    <h3>Ideal Demo Content</h3>
+    <ul>
+      <li><strong>15-45 minutes of gameplay</strong> — Long enough to hook, short enough to leave wanting more</li>
+      <li><strong>Core gameplay loop</strong> — Show what players will actually DO</li>
+      <li><strong>Your best content</strong> — Don't start with tutorial slog</li>
+      <li><strong>A satisfying ending point</strong> — Cliffhanger or clear "this is where full game continues"</li>
+      <li><strong>Polish</strong> — This is players' first impression; bugs hurt</li>
+    </ul>
+    
+    <div class="warning-box">
+      <p><strong>Don't give away too much:</strong> If players feel satisfied by the demo, they're less likely to purchase. Leave them wanting more.</p>
+    </div>
+    
+    <h3>Demo Strategies</h3>
+    
+    <ul>
+      <li><strong>Vertical slice:</strong> Polished chunk of early-game content</li>
+      <li><strong>Tutorial + hook:</strong> Teach mechanics, end on exciting moment</li>
+      <li><strong>Time-limited:</strong> Full game access for 1 hour</li>
+      <li><strong>Separate content:</strong> Unique demo scenario not in full game</li>
+    </ul>
+    
+    <h2>Steam Next Fest</h2>
+    
+    <p>Steam Next Fest is a week-long festival showcasing upcoming games with demos. It's one of the best marketing opportunities for indie developers.</p>
+    
+    <h3>How to Participate</h3>
+    <ol>
+      <li>Have a Coming Soon page live</li>
+      <li>Have a playable demo available</li>
+      <li>Register for the event in Steamworks (deadlines apply)</li>
+      <li>Optionally, stream your game during the event</li>
+    </ol>
+    
+    <h3>Next Fest Tips</h3>
+    <ul>
+      <li><strong>Launch demo early:</strong> Don't wait until Next Fest to release your demo</li>
+      <li><strong>Update before the event:</strong> Fix any known issues</li>
+      <li><strong>Stream daily:</strong> Live streams get visibility in the event</li>
+      <li><strong>Engage with feedback:</strong> Respond to comments and discussions</li>
+      <li><strong>Track analytics:</strong> Monitor downloads and wishlists</li>
+    </ul>
+    
+    <div class="tip-box">
+      <p><strong>Next Fest happens ~3 times per year.</strong> Plan your demo release to coincide with one of these events for maximum impact.</p>
+    </div>
+    
+    <h2>Demo Best Practices</h2>
+    
+    <h3>Before Release</h3>
+    <ul>
+      <li>Playtest extensively — first impressions matter</li>
+      <li>Include clear wishlist prompt at the end</li>
+      <li>Add Discord/social links for community building</li>
+      <li>Test on multiple hardware configurations</li>
+    </ul>
+    
+    <h3>After Release</h3>
+    <ul>
+      <li>Monitor discussions and reviews</li>
+      <li>Fix critical bugs quickly</li>
+      <li>Respond to player feedback</li>
+      <li>Update demo if significant improvements are made</li>
+    </ul>
+    
+    <h3>When to Remove Your Demo</h3>
+    <p>Common approaches:</p>
+    <ul>
+      <li><strong>Keep it forever:</strong> Ongoing marketing tool</li>
+      <li><strong>Remove at launch:</strong> Prevents demo-only players</li>
+      <li><strong>Remove after post-launch period:</strong> Best of both worlds</li>
+    </ul>
+    
+    <h2>Demo vs Early Access</h2>
+    
+    <p>Demos and Early Access serve different purposes:</p>
+    
+    <ul>
+      <li><strong>Demo:</strong> Free, limited content, no commitment from player</li>
+      <li><strong>Early Access:</strong> Paid, full current content, player invested</li>
+    </ul>
+    
+    <p>You can have both — a demo alongside Early Access is common and effective.</p>
+    
+    <h2>Common Demo Mistakes</h2>
+    
+    <ul>
+      <li><strong>Too long:</strong> 2-hour demos exhaust interest before purchase</li>
+      <li><strong>Too buggy:</strong> First impression becomes "this game is broken"</li>
+      <li><strong>No hook:</strong> Boring content doesn't drive wishlists</li>
+      <li><strong>No CTA:</strong> Forgetting to ask for wishlist</li>
+      <li><strong>Wrong content:</strong> Tutorial-only demos don't show the real game</li>
+    </ul>
+    
+    <div class="cta-box">
+      <h3>Main Game Page Ready?</h3>
+      <p>Your demo links to your store page. Make sure it's optimized.</p>
+      <a href="index.html" class="cta-btn">Run Free Check →</a>
+    </div>
+    
+    <h2>Related Resources</h2>
+    <ul>
+      <li><a href="coming-soon.html">Coming Soon Page Guide</a></li>
+      <li><a href="optimization.html">Store Page Optimization</a></li>
+      <li><a href="guide.html">Complete Store Page Checklist</a></li>
+    </ul>
+    
+    <footer>
+      <p class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="faq.html">FAQ</a>
+        <a href="pricing.html">Pricing</a>
+      </p>
+      <p>Steam Page Check — Not affiliated with Valve Corporation.</p>
+    </footer>
+  </div>
+</body>
+</html>

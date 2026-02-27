@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam Review Time — How Long Does Approval Take? (2026)</title>
+  <meta name="description" content="How long does Steam review take? Timeline for store page and build approval, what to expect, and how to avoid delays.">
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  
+  <meta property="og:title" content="Steam Review Time — How Long Does Approval Take?">
+  <meta property="og:description" content="Timeline for store page and build approval.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://steampagecheck.com/review-time.html">
+  <meta property="og:image" content="https://steampagecheck.com/og-image.png">
+  
+  <link rel="canonical" href="https://steampagecheck.com/review-time.html">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1b2838;
+      color: #c7d5e0;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #8f98a0;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      color: #66c0f4;
+      margin: 48px 0 16px;
+    }
+    h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 28px 0 12px;
+    }
+    p { margin-bottom: 16px; }
+    ul, ol {
+      margin: 16px 0 24px 24px;
+    }
+    li { margin-bottom: 10px; }
+    a { color: #66c0f4; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .time-card {
+      background: #0d1b2a;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .time-badge {
+      background: #1e3a5f;
+      border-radius: 8px;
+      padding: 16px 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .time-badge .days {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #66c0f4;
+      line-height: 1;
+    }
+    .time-badge .label {
+      font-size: 0.85rem;
+      color: #8f98a0;
+      margin-top: 4px;
+    }
+    .time-content h3 {
+      margin: 0 0 8px 0;
+    }
+    .time-content p {
+      margin: 0;
+      color: #a0b3c0;
+    }
+    @media (max-width: 500px) {
+      .time-card {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    .timeline {
+      background: #0d1b2a;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .timeline-item {
+      display: flex;
+      margin-bottom: 20px;
+      padding-left: 30px;
+      border-left: 2px solid #2a3f5f;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      background: #66c0f4;
+      border-radius: 50%;
+    }
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+    .timeline-content h4 {
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .timeline-content p {
+      color: #a0b3c0;
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+    .tip-box {
+      background: #1a2e2a;
+      border-left: 4px solid #4ade80;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .tip-box p { margin-bottom: 0; color: #a7f3d0; }
+    .warning-box {
+      background: #2d1f1f;
+      border-left: 4px solid #f87171;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .warning-box p { margin-bottom: 0; color: #fca5a5; }
+    .cta-box {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
+      border: 1px solid #66c0f4;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 40px 0;
+      text-align: center;
+    }
+    .cta-box h3 {
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .cta-box p {
+      margin-bottom: 16px;
+      color: #a0b3c0;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #66c0f4;
+      color: #1b2838;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .cta-btn:hover { background: #4fa3d7; text-decoration: none; }
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid #2a3f5f;
+      text-align: center;
+      color: #8f98a0;
+      font-size: 0.9rem;
+    }
+    .footer-links { margin-bottom: 16px; }
+    .footer-links a { margin: 0 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Steam Review Time</h1>
+    <p class="subtitle">How long does it take for Valve to review your store page and game build? Here's what to expect.</p>
+    
+    <h2>Typical Review Times</h2>
+    
+    <div class="time-card">
+      <div class="time-badge">
+        <div class="days">3-5</div>
+        <div class="label">business days</div>
+      </div>
+      <div class="time-content">
+        <h3>Store Page Review</h3>
+        <p>Initial review of your store presence — capsules, screenshots, description, and all required fields.</p>
+      </div>
+    </div>
+    
+    <div class="time-card">
+      <div class="time-badge">
+        <div class="days">3-5</div>
+        <div class="label">business days</div>
+      </div>
+      <div class="time-content">
+        <h3>Build Review</h3>
+        <p>Review of your game build to ensure it launches, matches store page claims, and follows guidelines.</p>
+      </div>
+    </div>
+    
+    <div class="time-card">
+      <div class="time-badge">
+        <div class="days">5-7+</div>
+        <div class="label">business days</div>
+      </div>
+      <div class="time-content">
+        <h3>Adult Content</h3>
+        <p>Games with mature sexual content may require longer review times.</p>
+      </div>
+    </div>
+    
+    <div class="tip-box">
+      <p><strong>Plan for 7+ days:</strong> Valve recommends submitting at least 7 business days before you need approval, to account for potential revision requests.</p>
+    </div>
+    
+    <h2>Review Process Timeline</h2>
+    
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>1. Complete Store Presence Checklist</h4>
+          <p>Fill in all required fields — capsules, screenshots, description, system requirements, etc.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>2. Submit Store Page for Review</h4>
+          <p>Click "Mark as ready for review" in Steamworks. Your page enters the review queue.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>3. Wait for Store Page Approval (3-5 days)</h4>
+          <p>Valve reviews your page. You'll get approval or feedback requesting changes.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>4. Complete Build Checklist</h4>
+          <p>Upload your game build and complete the build review checklist.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>5. Submit Build for Review</h4>
+          <p>Can only be done after store page is approved.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>6. Wait for Build Approval (3-5 days)</h4>
+          <p>Valve tests your game. Approval or feedback provided.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>7. 2-Week Coming Soon Period</h4>
+          <p>Your page must be public for at least 2 weeks before release.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h4>8. Release</h4>
+          <p>Once everything is approved and 2 weeks have passed, you can release.</p>
+        </div>
+      </div>
+    </div>
+    
+    <h2>What Causes Delays?</h2>
+    
+    <h3>Store Page Issues</h3>
+    <ul>
+      <li>Placeholder text ("TBD", "Coming Soon")</li>
+      <li>Missing required fields</li>
+      <li>Non-gameplay screenshots</li>
+      <li>Capsule image violations</li>
+      <li>Trademark or legal concerns</li>
+      <li>Missing Early Access disclosures</li>
+    </ul>
+    
+    <h3>Build Issues</h3>
+    <ul>
+      <li>Game doesn't launch</li>
+      <li>Features listed but not implemented</li>
+      <li>Missing supported OS functionality</li>
+      <li>Content policy violations</li>
+    </ul>
+    
+    <div class="warning-box">
+      <p><strong>Each revision adds time:</strong> If Valve requests changes, fixing and resubmitting goes back to the end of the review queue. Multiple rounds of feedback can delay launch significantly.</p>
+    </div>
+    
+    <h2>How to Speed Up Approval</h2>
+    
+    <ol>
+      <li><strong>Complete everything first</strong> — Don't submit partial pages</li>
+      <li><strong>Follow guidelines exactly</strong> — Read Steamworks documentation carefully</li>
+      <li><strong>Use gameplay screenshots</strong> — Not concept art or renders</li>
+      <li><strong>Test your build</strong> — Make sure it launches on all supported OSes</li>
+      <li><strong>Be honest in disclosures</strong> — Early Access, mature content, etc.</li>
+      <li><strong>Check for trademark issues</strong> — Don't mention competitors inappropriately</li>
+    </ol>
+    
+    <h2>Minimum Timeline to Release</h2>
+    
+    <p>Assuming no revisions are needed:</p>
+    
+    <ul>
+      <li><strong>Store page review:</strong> 3-5 business days</li>
+      <li><strong>Build review:</strong> 3-5 business days</li>
+      <li><strong>Coming Soon period:</strong> 14 days minimum</li>
+      <li><strong>Total:</strong> ~3-4 weeks minimum</li>
+    </ul>
+    
+    <div class="tip-box">
+      <p><strong>Best practice:</strong> Submit your store page months in advance. Use the Coming Soon period to build wishlists. Only submit the build for review when you're actually ready to release.</p>
+    </div>
+    
+    <h2>What Happens After Approval?</h2>
+    
+    <p>Once both store page and build are approved, your page shows "Ready for Release." You control when to actually release — just press the release button when you're ready.</p>
+    
+    <p>Approved games don't auto-release. You must manually trigger the launch.</p>
+    
+    <div class="cta-box">
+      <h3>Avoid Revision Delays</h3>
+      <p>Check your page for common issues before submitting.</p>
+      <a href="index.html" class="cta-btn">Run Free Check →</a>
+    </div>
+    
+    <h2>Related Resources</h2>
+    <ul>
+      <li><a href="rejected.html">Why Steam Pages Get Rejected</a></li>
+      <li><a href="coming-soon.html">Coming Soon Page Guide</a></li>
+      <li><a href="guide.html">Complete Store Page Checklist</a></li>
+    </ul>
+    
+    <footer>
+      <p class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="faq.html">FAQ</a>
+        <a href="pricing.html">Pricing</a>
+      </p>
+      <p>Steam Page Check — Not affiliated with Valve Corporation.</p>
+    </footer>
+  </div>
+</body>
+</html>

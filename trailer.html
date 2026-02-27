@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam Trailer Requirements — Specs, Format & Best Practices (2026)</title>
+  <meta name="description" content="Steam trailer requirements and best practices. Video specs, format guidelines, and tips for creating trailers that convert to wishlists.">
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  
+  <meta property="og:title" content="Steam Trailer Requirements 2026">
+  <meta property="og:description" content="Video specs, format guidelines, and trailer best practices.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://steampagecheck.com/trailer.html">
+  <meta property="og:image" content="https://steampagecheck.com/og-image.png">
+  
+  <link rel="canonical" href="https://steampagecheck.com/trailer.html">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1b2838;
+      color: #c7d5e0;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #8f98a0;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      color: #66c0f4;
+      margin: 48px 0 16px;
+    }
+    h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 28px 0 12px;
+    }
+    p { margin-bottom: 16px; }
+    ul, ol {
+      margin: 16px 0 24px 24px;
+    }
+    li { margin-bottom: 10px; }
+    a { color: #66c0f4; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      background: #0d1b2a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid #2a3f5f;
+    }
+    th {
+      background: #1e3a5f;
+      color: #66c0f4;
+      font-weight: 600;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .spec-box {
+      background: #0d1b2a;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .spec-box h3 {
+      color: #66c0f4;
+      margin: 0 0 16px 0;
+    }
+    .tip-box {
+      background: #1a2e2a;
+      border-left: 4px solid #4ade80;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .tip-box p { margin-bottom: 0; color: #a7f3d0; }
+    .warning-box {
+      background: #2d1f1f;
+      border-left: 4px solid #f87171;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .warning-box p { margin-bottom: 0; color: #fca5a5; }
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+    @media (max-width: 600px) {
+      .do-dont { grid-template-columns: 1fr; }
+    }
+    .do-box, .dont-box {
+      background: #0d1b2a;
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .do-box {
+      border-top: 3px solid #4ade80;
+    }
+    .dont-box {
+      border-top: 3px solid #f87171;
+    }
+    .do-box h4 { color: #4ade80; margin-bottom: 12px; }
+    .dont-box h4 { color: #f87171; margin-bottom: 12px; }
+    .do-box ul, .dont-box ul { margin: 0; padding-left: 20px; }
+    .cta-box {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
+      border: 1px solid #66c0f4;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 40px 0;
+      text-align: center;
+    }
+    .cta-box h3 {
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .cta-box p {
+      margin-bottom: 16px;
+      color: #a0b3c0;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #66c0f4;
+      color: #1b2838;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .cta-btn:hover { background: #4fa3d7; text-decoration: none; }
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid #2a3f5f;
+      text-align: center;
+      color: #8f98a0;
+      font-size: 0.9rem;
+    }
+    .footer-links { margin-bottom: 16px; }
+    .footer-links a { margin: 0 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Steam Trailer Requirements</h1>
+    <p class="subtitle">Technical specifications, format requirements, and best practices for creating effective Steam trailers.</p>
+    
+    <h2>Technical Specifications</h2>
+    
+    <div class="spec-box">
+      <h3>Required Video Specs</h3>
+      <table>
+        <tr>
+          <th>Specification</th>
+          <th>Requirement</th>
+        </tr>
+        <tr>
+          <td>Resolution</td>
+          <td>1920×1080 (1080p) recommended, 1280×720 minimum</td>
+        </tr>
+        <tr>
+          <td>Aspect Ratio</td>
+          <td>16:9</td>
+        </tr>
+        <tr>
+          <td>Frame Rate</td>
+          <td>30 or 60 fps</td>
+        </tr>
+        <tr>
+          <td>Format</td>
+          <td>.mov or .mp4 (H.264 codec)</td>
+        </tr>
+        <tr>
+          <td>Bitrate</td>
+          <td>10-20 Mbps recommended</td>
+        </tr>
+        <tr>
+          <td>Audio</td>
+          <td>AAC, 320kbps stereo</td>
+        </tr>
+        <tr>
+          <td>Max File Size</td>
+          <td>No hard limit, but keep reasonable</td>
+        </tr>
+        <tr>
+          <td>Max Length</td>
+          <td>No limit, but 60-90 seconds recommended</td>
+        </tr>
+      </table>
+    </div>
+    
+    <div class="tip-box">
+      <p><strong>Pro tip:</strong> Upload the highest quality source file. Steam will transcode it automatically for different bandwidths.</p>
+    </div>
+    
+    <h2>Trailer Types</h2>
+    
+    <p>Steam supports multiple trailers. Use them strategically:</p>
+    
+    <h3>Main Trailer</h3>
+    <p>Your primary trailer, shown at the top of your store page. Should give the complete picture of your game in 60-90 seconds.</p>
+    
+    <h3>Gameplay Trailer</h3>
+    <p>Pure gameplay footage with minimal editing. Some players skip to this specifically.</p>
+    
+    <h3>Update/DLC Trailers</h3>
+    <p>For post-launch content. Keep these shorter (30-60 seconds) and focused on new features.</p>
+    
+    <h3>Microtrailers</h3>
+    <p>6-second looping trailers that autoplay in some Steam UI elements. Optional but increasingly used.</p>
+    
+    <h2>Content Best Practices</h2>
+    
+    <div class="warning-box">
+      <p><strong>The 5-second rule:</strong> Viewers decide within 5 seconds whether to keep watching. Start with your hook, not logos.</p>
+    </div>
+    
+    <h3>Effective Structure</h3>
+    <ol>
+      <li><strong>0-5 seconds:</strong> Hook — your most exciting gameplay moment</li>
+      <li><strong>5-30 seconds:</strong> Core gameplay loop — what players actually DO</li>
+      <li><strong>30-60 seconds:</strong> Variety — different mechanics, areas, features</li>
+      <li><strong>60-90 seconds:</strong> Scope and polish — show content depth</li>
+      <li><strong>Final 5 seconds:</strong> Logo, title, wishlist CTA</li>
+    </ol>
+    
+    <div class="do-dont">
+      <div class="do-box">
+        <h4>✓ Do</h4>
+        <ul>
+          <li>Lead with gameplay</li>
+          <li>Show what players DO</li>
+          <li>Use actual game audio</li>
+          <li>Keep it under 90 seconds</li>
+          <li>Show UI where relevant</li>
+          <li>End with clear branding</li>
+        </ul>
+      </div>
+      <div class="dont-box">
+        <h4>✗ Don't</h4>
+        <ul>
+          <li>Start with studio logos</li>
+          <li>Show only cinematics</li>
+          <li>Use placeholder assets</li>
+          <li>Make it 3+ minutes</li>
+          <li>Hide the UI entirely</li>
+          <li>Forget a call-to-action</li>
+        </ul>
+      </div>
+    </div>
+    
+    <h2>Audio Guidelines</h2>
+    
+    <ul>
+      <li><strong>Use in-game audio</strong> — Players want to hear what the game actually sounds like</li>
+      <li><strong>Music should match tone</strong> — Don't use epic orchestral for a cozy game</li>
+      <li><strong>Balance levels</strong> — Music shouldn't drown out sound effects</li>
+      <li><strong>Consider no voiceover</strong> — Text overlays often work better and localize easier</li>
+    </ul>
+    
+    <h2>Common Trailer Mistakes</h2>
+    
+    <h3>1. Too Much Setup</h3>
+    <p>Long intros with logos, quotes, or slow atmospheric shots. Players skip forward or leave.</p>
+    
+    <h3>2. Cinematic-Only</h3>
+    <p>Pre-rendered footage that doesn't represent actual gameplay. Sets wrong expectations.</p>
+    
+    <h3>3. Too Long</h3>
+    <p>Trailers over 2 minutes lose most viewers. Respect people's time.</p>
+    
+    <h3>4. No Gameplay</h3>
+    <p>Showing the game world without showing what players DO in it.</p>
+    
+    <h3>5. Placeholder Quality</h3>
+    <p>Unfinished graphics, temp audio, or buggy footage. Wait until you have polished content.</p>
+    
+    <h2>Uploading to Steam</h2>
+    
+    <ol>
+      <li>Go to Steamworks → Your App → Edit Store Page</li>
+      <li>Navigate to the Trailers section</li>
+      <li>Click "Add New Trailer"</li>
+      <li>Upload your video file</li>
+      <li>Add a thumbnail (auto-generated or custom)</li>
+      <li>Set trailer name and language</li>
+      <li>Publish your store page changes</li>
+    </ol>
+    
+    <div class="tip-box">
+      <p><strong>Custom thumbnails:</strong> You can upload a custom thumbnail image for your trailer. Use your most exciting frame.</p>
+    </div>
+    
+    <h2>Multiple Trailers Strategy</h2>
+    
+    <p>For games with substantial content, consider multiple trailers:</p>
+    
+    <ul>
+      <li><strong>Trailer 1:</strong> Main/announcement trailer — overall game pitch</li>
+      <li><strong>Trailer 2:</strong> Gameplay deep-dive — extended gameplay focus</li>
+      <li><strong>Trailer 3:</strong> Launch trailer — updated for release</li>
+      <li><strong>Post-launch:</strong> Update trailers for major content drops</li>
+    </ul>
+    
+    <div class="cta-box">
+      <h3>Trailer Ready?</h3>
+      <p>Check the rest of your store page for compliance issues.</p>
+      <a href="index.html" class="cta-btn">Run Free Check →</a>
+    </div>
+    
+    <h2>Related Resources</h2>
+    <ul>
+      <li><a href="screenshots.html">Screenshot Requirements</a></li>
+      <li><a href="capsule-images.html">Capsule Image Requirements</a></li>
+      <li><a href="optimization.html">Store Page Optimization</a></li>
+      <li><a href="guide.html">Complete Store Page Checklist</a></li>
+    </ul>
+    
+    <footer>
+      <p class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="faq.html">FAQ</a>
+        <a href="pricing.html">Pricing</a>
+      </p>
+      <p>Steam Page Check — Not affiliated with Valve Corporation.</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main pages -->
   <url>
     <loc>https://steampagecheck.com/</loc>
     <changefreq>weekly</changefreq>
@@ -15,6 +16,55 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- SEO Content Pages -->
+  <url>
+    <loc>https://steampagecheck.com/rejected.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://steampagecheck.com/capsule-images.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://steampagecheck.com/coming-soon.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://steampagecheck.com/optimization.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://steampagecheck.com/trailer.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steampagecheck.com/screenshots.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steampagecheck.com/tags.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steampagecheck.com/review-time.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://steampagecheck.com/demo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Checks index and individual checks -->
   <url>
     <loc>https://steampagecheck.com/checks/</loc>
     <changefreq>monthly</changefreq>
@@ -70,11 +120,15 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  
+  <!-- Commercial pages -->
   <url>
     <loc>https://steampagecheck.com/pricing.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  
+  <!-- Policy pages -->
   <url>
     <loc>https://steampagecheck.com/terms.html</loc>
     <changefreq>yearly</changefreq>

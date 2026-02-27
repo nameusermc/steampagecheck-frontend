@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam Screenshot Requirements — Size, Format & Best Practices (2026)</title>
+  <meta name="description" content="Steam screenshot requirements and best practices. Dimensions, format specs, and tips for screenshots that convert browsers to wishlists.">
+  
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  
+  <meta property="og:title" content="Steam Screenshot Requirements 2026">
+  <meta property="og:description" content="Screenshot specs, guidelines, and optimization tips.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://steampagecheck.com/screenshots.html">
+  <meta property="og:image" content="https://steampagecheck.com/og-image.png">
+  
+  <link rel="canonical" href="https://steampagecheck.com/screenshots.html">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #1b2838;
+      color: #c7d5e0;
+      line-height: 1.8;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    h1 {
+      font-size: 2.2rem;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #8f98a0;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: 1.4rem;
+      color: #66c0f4;
+      margin: 48px 0 16px;
+    }
+    h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 28px 0 12px;
+    }
+    p { margin-bottom: 16px; }
+    ul, ol {
+      margin: 16px 0 24px 24px;
+    }
+    li { margin-bottom: 10px; }
+    a { color: #66c0f4; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .spec-box {
+      background: #0d1b2a;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .spec-box h3 {
+      color: #66c0f4;
+      margin: 0 0 16px 0;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 500px) {
+      .spec-grid { grid-template-columns: 1fr; }
+    }
+    .spec-item {
+      background: #1e3a5f;
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .spec-item strong {
+      color: #66c0f4;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .tip-box {
+      background: #1a2e2a;
+      border-left: 4px solid #4ade80;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .tip-box p { margin-bottom: 0; color: #a7f3d0; }
+    .warning-box {
+      background: #2d1f1f;
+      border-left: 4px solid #f87171;
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .warning-box p { margin-bottom: 0; color: #fca5a5; }
+    .order-list {
+      background: #0d1b2a;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+      counter-reset: item;
+    }
+    .order-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #2a3f5f;
+    }
+    .order-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .order-num {
+      width: 32px;
+      height: 32px;
+      background: #1e3a5f;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #66c0f4;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-right: 16px;
+    }
+    .order-content h4 {
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .order-content p {
+      color: #a0b3c0;
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, #1e3a5f 0%, #0d1b2a 100%);
+      border: 1px solid #66c0f4;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 40px 0;
+      text-align: center;
+    }
+    .cta-box h3 {
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .cta-box p {
+      margin-bottom: 16px;
+      color: #a0b3c0;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #66c0f4;
+      color: #1b2838;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .cta-btn:hover { background: #4fa3d7; text-decoration: none; }
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid #2a3f5f;
+      text-align: center;
+      color: #8f98a0;
+      font-size: 0.9rem;
+    }
+    .footer-links { margin-bottom: 16px; }
+    .footer-links a { margin: 0 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Steam Screenshot Requirements</h1>
+    <p class="subtitle">Technical specifications and best practices for Steam store page screenshots.</p>
+    
+    <h2>Technical Specifications</h2>
+    
+    <div class="spec-box">
+      <h3>Screenshot Specs</h3>
+      <div class="spec-grid">
+        <div class="spec-item">
+          <strong>Minimum Size</strong>
+          1280 × 720 pixels
+        </div>
+        <div class="spec-item">
+          <strong>Recommended Size</strong>
+          1920 × 1080 pixels
+        </div>
+        <div class="spec-item">
+          <strong>Aspect Ratio</strong>
+          16:9 (strongly recommended)
+        </div>
+        <div class="spec-item">
+          <strong>Format</strong>
+          PNG or JPG
+        </div>
+        <div class="spec-item">
+          <strong>Minimum Required</strong>
+          5 screenshots
+        </div>
+        <div class="spec-item">
+          <strong>Maximum Allowed</strong>
+          ~20 screenshots
+        </div>
+      </div>
+    </div>
+    
+    <div class="tip-box">
+      <p><strong>Use 1920×1080:</strong> Higher resolution screenshots look sharper in the lightbox view and show more detail.</p>
+    </div>
+    
+    <h2>Content Requirements</h2>
+    
+    <h3>Screenshots MUST Show</h3>
+    <ul>
+      <li>Actual in-game footage (not pre-rendered)</li>
+      <li>Representative gameplay moments</li>
+      <li>Final or near-final visual quality</li>
+    </ul>
+    
+    <h3>Screenshots MUST NOT Contain</h3>
+    <ul>
+      <li>Concept art or promotional renders</li>
+      <li>Pre-rendered cinematic stills</li>
+      <li>Award logos or accolades</li>
+      <li>Review quotes or scores</li>
+      <li>Marketing copy or descriptions</li>
+      <li>Pricing information</li>
+      <li>Watermarks or branding overlays</li>
+    </ul>
+    
+    <div class="warning-box">
+      <p><strong>Common rejection:</strong> Using concept art or cinematic renders instead of actual gameplay screenshots.</p>
+    </div>
+    
+    <h2>Screenshot Order Strategy</h2>
+    
+    <p>The order of your screenshots matters significantly. The first 4 appear in hover previews.</p>
+    
+    <div class="order-list">
+      <div class="order-item">
+        <div class="order-num">1</div>
+        <div class="order-content">
+          <h4>Core Gameplay</h4>
+          <p>Show what players actually DO. This is the most important screenshot.</p>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-num">2</div>
+        <div class="order-content">
+          <h4>Visual Hook</h4>
+          <p>Your most visually impressive moment — a beautiful environment or exciting action.</p>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-num">3</div>
+        <div class="order-content">
+          <h4>Variety</h4>
+          <p>Different area, mechanic, or game mode to show scope.</p>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-num">4</div>
+        <div class="order-content">
+          <h4>Unique Feature</h4>
+          <p>Whatever makes your game different from competitors.</p>
+        </div>
+      </div>
+      <div class="order-item">
+        <div class="order-num">5+</div>
+        <div class="order-content">
+          <h4>Supporting Details</h4>
+          <p>UI systems, progression, additional areas, multiplayer, etc.</p>
+        </div>
+      </div>
+    </div>
+    
+    <h2>Best Practices</h2>
+    
+    <h3>Composition Tips</h3>
+    <ul>
+      <li><strong>Show the player character</strong> — Helps players imagine themselves in the game</li>
+      <li><strong>Include UI when relevant</strong> — Communicates genre and complexity</li>
+      <li><strong>Capture action moments</strong> — Static scenes are less engaging</li>
+      <li><strong>Use varied environments</strong> — Show the game's scope</li>
+      <li><strong>Highlight unique mechanics</strong> — What makes your game special?</li>
+    </ul>
+    
+    <h3>Technical Quality</h3>
+    <ul>
+      <li><strong>Max out graphics settings</strong> — Screenshots should show best-case visuals</li>
+      <li><strong>Hide debug UI</strong> — No FPS counters or developer tools</li>
+      <li><strong>Avoid compression artifacts</strong> — Use PNG for best quality</li>
+      <li><strong>Check aspect ratio</strong> — Non-16:9 screenshots get cropped awkwardly</li>
+    </ul>
+    
+    <h2>UI in Screenshots</h2>
+    
+    <p>Should you show UI? It depends:</p>
+    
+    <h3>Show UI When:</h3>
+    <ul>
+      <li>It helps communicate genre (inventory = RPG, minimap = open world)</li>
+      <li>It shows important systems (skill trees, crafting, etc.)</li>
+      <li>The UI is visually polished and appealing</li>
+    </ul>
+    
+    <h3>Hide UI When:</h3>
+    <ul>
+      <li>Showcasing environments or visuals</li>
+      <li>UI is placeholder or unpolished</li>
+      <li>You want a cinematic feel</li>
+    </ul>
+    
+    <div class="tip-box">
+      <p><strong>Mix it up:</strong> Include some screenshots with UI and some without. This gives players the full picture.</p>
+    </div>
+    
+    <h2>Localization</h2>
+    
+    <p>If your screenshots contain significant text (like tutorials or story moments), consider creating localized versions for your major markets. Screenshots with English text may underperform in non-English regions.</p>
+    
+    <h2>Animated Screenshots (GIFs)</h2>
+    
+    <p>Steam doesn't support animated screenshots directly, but you can use the "About This Game" section to embed GIFs that showcase movement and action.</p>
+    
+    <h2>Common Mistakes</h2>
+    
+    <ul>
+      <li><strong>All combat, no variety</strong> — Show different aspects of the game</li>
+      <li><strong>Empty environments</strong> — Scenes should have action or points of interest</li>
+      <li><strong>Repetitive shots</strong> — Each screenshot should show something new</li>
+      <li><strong>Spoilers</strong> — Avoid late-game content or story reveals</li>
+      <li><strong>Low resolution</strong> — Fuzzy screenshots look unprofessional</li>
+      <li><strong>Debug info visible</strong> — Remove all developer UI</li>
+    </ul>
+    
+    <div class="cta-box">
+      <h3>Screenshots Ready?</h3>
+      <p>Check your complete store page for compliance issues.</p>
+      <a href="index.html" class="cta-btn">Run Free Check →</a>
+    </div>
+    
+    <h2>Related Resources</h2>
+    <ul>
+      <li><a href="trailer.html">Trailer Requirements</a></li>
+      <li><a href="capsule-images.html">Capsule Image Requirements</a></li>
+      <li><a href="optimization.html">Store Page Optimization</a></li>
+      <li><a href="guide.html">Complete Store Page Checklist</a></li>
+    </ul>
+    
+    <footer>
+      <p class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="guide.html">Guide</a>
+        <a href="faq.html">FAQ</a>
+        <a href="pricing.html">Pricing</a>
+      </p>
+      <p>Steam Page Check — Not affiliated with Valve Corporation.</p>
+    </footer>
+  </div>
+</body>
+</html>
